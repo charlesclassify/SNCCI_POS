@@ -26,14 +26,15 @@
         <div class="card-body">
             <div class="row">
                 <div class="section">
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label for="product_code" class="bold-label">Product Code</label>
-                        <p><?= $product->product_code; ?></p>
-                    </div>
 
                     <div class="form-group col-md-3 d-inline-block">
                         <label for="date_created" class="bold-label">Date Updated</label>
                         <p><?= date('m-d-Y'); ?></p>
+                    </div>
+
+                    <div class="form-group col-md-3 d-inline-block">
+                        <label for="product_code" class="bold-label">Product Code</label>
+                        <p><?= $product->product_code; ?></p>
                     </div>
 
                     <div class="form-group col-md-5 d-inline-block">
@@ -47,59 +48,43 @@
                         <p><?= $select->supplier_name; ?> - <?= $select->company_name; ?></p>
                     </div>
 
+
+                    <div class="form-group col-md-3 d-inline-block">
+                        <label class="bold-label">Product Brand</label>
+                        <p><?= $product->product_brand; ?></p>
+                    </div>
+                    <div class="form-group col-md-3 d-inline-block">
+                        <label class="bold-label">Product Category</label>
+                        <p><?= $product->product_category; ?></p>
+                    </div>
+
                     <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Barcode</label>
                         <p><?= $product->product_barcode; ?></p>
                         <?= form_error('product_barcode'); ?>
                     </div>
 
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Product Category</label>
-                        <p><?= $product->product_category; ?></p>
-                    </div>
-
-                    <div class="form-group col-md-2 d-inline-block">
-                        <label class="bold-label">Margin (%)</label>
-                        <p><?= $product->product_margin; ?></p>
-                        <?= form_error('product_margin'); ?>
-                    </div>
 
                     <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">VAT</label>
-                        <p><?= $product->product_vat; ?></p>
+                        <label class="bold-label">Unit of Measure</label>
+
+                        <p><?= $product->product_uom; ?></p>
+
                     </div>
-                </div>
-                <div class="section">
-                    <h4>Inventory Information</h4>
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Inbound Threshold</label>
-                        <p><?= $product->product_inbound_threshold; ?></p>
-                    </div>
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Shelf Life</label>
-                        <p><?= $product->product_shelf_life; ?></p>
-                    </div>
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Recall Threshold</label>
-                        <p><?= $product->product_recall_threshold; ?></p>
-                    </div>
+
                     <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Minimum Quantity</label>
                         <p><?= $product->product_minimum_quantity; ?></p>
                     </div>
+
                     <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Required Quantity</label>
-                        <p><?= $product->product_required_quantity; ?></p>
-                    </div>
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Maximum Quantity</label>
-                        <p><?= $product->product_maximum_quantity; ?></p>
-                    </div>
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Minimum Order Quantity</label>
-                        <p><?= $product->product_minimum_order_quantity; ?></p>
+                        <label class="bold-label">Price</label>
+                        <p>₱ <?= number_format($product->product_price, 2); ?></p>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
         <div class="card-footer">

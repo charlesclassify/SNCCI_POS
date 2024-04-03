@@ -7,11 +7,11 @@
             <table class="table table-bordered table-stripped table-sm" id="user-datatables">
                 <thead>
                     <tr class="text-center">
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Category</th>
+                        <th>Code</th>
+                        <th>Product Name</th>
+                        <th>Brand</th>
                         <th>Qty</th>
-                        <th>Selling Price</th>
+                        <th>Price</th>
                         <th>Critical Level</th>
                         <th>Action</th>
                     </tr>
@@ -23,7 +23,7 @@
                         <tr class="text-center">
                             <td><?php echo $pro->product_code; ?></td>
                             <td><?php echo $pro->product_name; ?></td>
-                            <td><?php echo $pro->product_category; ?></td>
+                            <td><?php echo $pro->product_brand; ?></td>
                             <td><?php echo $pro->product_quantity; ?></td>
                             <td>₱<?php echo $pro->product_price; ?></td>
                             <td>

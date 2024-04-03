@@ -3,7 +3,7 @@
 class Product_model extends CI_Model
 {
 
-	function product_code()
+	/*function product_code()
 	{
 		$year = date('Y');
 
@@ -19,70 +19,37 @@ class Product_model extends CI_Model
 			$next_product_code = $prefix . '0001';
 		}
 		return $next_product_code;
-	}
+	}*/
 
-	function insert_product($image_file_name)
+	function insert_product()
 	{
 		$product_code = (string) $this->input->post('product_code');
 		$product_name = (string) $this->input->post('product_name');
-		$product_margin = (float) $this->input->post('product_margin'); // Convert to float for calculations
-		$product_vat = (string) $this->input->post('product_vat');
+		$product_brand =  $this->input->post('product_brand');
 		$product_category = (string) $this->input->post('product_category');
 		$supplier_id = (string) $this->input->post('supplier_id');
-		$product_inbound_threshold = (string) $this->input->post('product_inbound_threshold');
-		$product_shelf_life = (string) $this->input->post('product_shelf_life');
-		$product_recall_threshold = (string) $this->input->post('product_recall_threshold');
 		$product_minimum_quantity = (string) $this->input->post('product_minimum_quantity');
-		$product_required_quantity = (string) $this->input->post('product_required_quantity');
-		$product_maximum_quantity = (string) $this->input->post('product_maximum_quantity');
-		$product_minimum_order_quantity = (string) $this->input->post('product_minimum_order_quantity');
-
-
-		$product_unit =  $this->input->post('product_unit');
+		$product_uom =  $this->input->post('product_uom');
 		$product_barcode =  $this->input->post('product_barcode');
-
-
-
-		$product_unit =  $this->input->post('product_unit[]');
-		$product_barcode =  $this->input->post('product_barcode[]');
+		$product_price =  $this->input->post('product_price');
 
 		$data = array(
 			'product_code' => $product_code,
+			'product_brand' => $product_brand,
 			'product_name' => $product_name,
 			'product_dateadded' => date('Y-m-d H:i:s'),
-			'product_margin' => $product_margin,
-			'product_vat' => $product_vat,
 			'product_category' => $product_category,
+			'product_uom' => $product_uom,
 			'supplier_id' => $supplier_id,
-			'product_inbound_threshold' => $product_inbound_threshold,
-			'product_shelf_life' => $product_shelf_life,
-			'product_recall_threshold' => $product_recall_threshold,
+			'product_barcode' => $product_barcode,
 			'product_minimum_quantity' => $product_minimum_quantity,
-			'product_required_quantity' => $product_required_quantity,
-			'product_maximum_quantity' => $product_maximum_quantity,
-			'product_minimum_order_quantity' => $product_minimum_order_quantity,
-			'product_image' => $image_file_name,
+			'product_price' => $product_price,
+
 		);
 
 		$response = $this->db->insert('product', $data);
 
 		if ($response) {
-			$last_product_id = $this->db->insert_id();
-
-			foreach ($product_unit as $index => $product_unit) {
-				$arr_unit = $product_unit;
-				$arr_barcode = $product_barcode[$index];
-
-				// Insert data into barcode table
-				$data_barcode = [
-
-					'unit' => $arr_unit,
-					'product_id' => $last_product_id,
-					'product_name' => $product_name,
-					'barcode' => $arr_barcode,
-				];
-				$this->db->insert('barcode', $data_barcode);
-			}
 			return $this->db->insert_id();
 		} else {
 			return FALSE;
@@ -100,124 +67,37 @@ class Product_model extends CI_Model
 	}
 
 
-	function update_product($product_id, $update_image)
+	function update_product($product_id)
 	{
 		$product_code = (string) $this->input->post('product_code');
 		$product_name = (string) $this->input->post('product_name');
-		$supplier_id = (string) $this->input->post('supplier_id');
+		$product_brand =  $this->input->post('product_brand');
 		$product_category = (string) $this->input->post('product_category');
-		$product_margin = (string) $this->input->post('product_margin');
-		$product_vat = (string) $this->input->post('product_vat');
-		$product_inbound_threshold = (string) $this->input->post('product_inbound_threshold');
-		$product_shelf_life = (string) $this->input->post('product_shelf_life');
-		$product_recall_threshold = (string) $this->input->post('product_recall_threshold');
+		$supplier_id = (string) $this->input->post('supplier_id');
 		$product_minimum_quantity = (string) $this->input->post('product_minimum_quantity');
-		$product_required_quantity = (string) $this->input->post('product_required_quantity');
-		$product_maximum_quantity = (string) $this->input->post('product_maximum_quantity');
-		$product_dateadded = (string) $this->input->post('product_dateadded');
-		$product_minimum_order_quantity = (string) $this->input->post('product_minimum_order_quantity');
-
-
-		$product_unit = $this->input->post('product_unit');
-		$product_barcode = $this->input->post('product_barcode');
-
-
-		// Initialize the product_image variable
-		$product_image = '';
-
-		// Check if a new image file is uploaded or if we should retain the existing image
-		if ($update_image) {
-			$config['upload_path']   = './assets/images/';
-			$config['allowed_types'] = 'jpg|jpeg|png|gif';
-			$config['max_size']      = 2048;
-			$config['encrypt_name']  = TRUE;
-
-			$this->load->library('upload', $config);
-
-			if ($this->upload->do_upload('product_image')) {
-				$image_data = $this->upload->data();
-				$product = $this->get_product($product_id);
-
-				// Delete the old image file if it exists
-				if ($product && !empty($product->product_image)) {
-					unlink('./assets/images/' . $product->product_image);
-				}
-
-				// Generate a unique filename based on the product name
-				$product_name = $this->input->post('product_name');
-				$unique_filename = strtolower(str_replace(' ', '', $product_name)) . '' . $product_id . '_' . time() . $image_data['file_ext'];
-
-				// Rename the uploaded file to the unique filename
-				$new_path = './assets/images/' . $unique_filename;
-				rename($image_data['full_path'], $new_path);
-
-				// Use the generated unique filename
-				$product_image = $unique_filename;
-			} else {
-				// Handle image upload error
-				$error_message = 'Image upload failed: ' . $this->upload->display_errors();
-				$this->session->set_flashdata('error', $error_message);
-				return FALSE;
-			}
-		} else {
-			// If no new image is uploaded, retain the existing image filename
-			$product = $this->get_product($product_id);
-			$product_image = $product->product_image;
-		}
+		$product_uom =  $this->input->post('product_uom');
+		$product_barcode =  $this->input->post('product_barcode');
+		$product_price =  $this->input->post('product_price');
 
 		// Update product data in the database
 		$data = array(
 			'product_code' => $product_code,
+			'product_brand' => $product_brand,
 			'product_name' => $product_name,
-			'supplier_id' => $supplier_id,
+			'product_dateadded' => date('Y-m-d H:i:s'),
 			'product_category' => $product_category,
-			'product_margin' => $product_margin,
-			'product_vat' => $product_vat,
-			'product_inbound_threshold' => $product_inbound_threshold,
-			'product_shelf_life' => $product_shelf_life,
-			'product_recall_threshold' => $product_recall_threshold,
+			'product_uom' => $product_uom,
+			'supplier_id' => $supplier_id,
+			'product_barcode' => $product_barcode,
 			'product_minimum_quantity' => $product_minimum_quantity,
-			'product_required_quantity' => $product_required_quantity,
-			'product_maximum_quantity' => $product_maximum_quantity,
-			'product_minimum_order_quantity' => $product_minimum_order_quantity,
-			'product_dateadded' => $product_dateadded,
-			'product_image' => $product_image, // Update the product image filename
+			'product_price' => $product_price,
 		);
+
 		// Update product data
 		$this->db->where('product_id', $product_id);
 		$response = $this->db->update('product', $data);
 
 		if ($response) {
-			foreach ($product_unit as $index => $product_unit) {
-				$arr_unit = $product_unit;
-				$arr_barcode = $product_barcode[$index];
-
-				// Check if the barcode already exists for the given product_id and unit
-				$existing_record = $this->db->get_where('barcode', array('product_id' => $product_id, 'unit' => $arr_unit))->row();
-
-				if ($existing_record) {
-					// If the record exists, update it
-					$data_barcode = [
-						'barcode' => $arr_barcode,
-						'product_name' => $product_name,
-					];
-
-					$this->db->where('barcode_id', $existing_record->barcode_id);
-					$this->db->update('barcode', $data_barcode);
-				} else {
-					// If the record does not exist, insert a new one
-					$data_barcode = [
-						'unit' => $arr_unit,
-						'product_id' => $product_id,
-						'product_name' => $product_name,
-						'barcode' => $arr_barcode,
-					];
-
-					$this->db->insert('barcode', $data_barcode);
-				}
-			}
-
-			// Move the return statement outside the foreach loop
 			return $product_id;
 		} else {
 			return FALSE;
@@ -332,7 +212,7 @@ class Product_model extends CI_Model
 		$this->db->select('COUNT(*) as low_stock_count');
 		$this->db->from('product');
 		$this->db->where('isDelete', 'no'); // Assuming 'isDelete' is the column for deletion status
-		$this->db->where('product_quantity < product_inbound_threshold');
+		$this->db->where('product_quantity < product_minimum_quantity');
 		$query = $this->db->get();
 
 		// Return the result
@@ -343,7 +223,7 @@ class Product_model extends CI_Model
 		// Select products where the quantity is less than the inbound threshold
 		$this->db->select('*');
 		$this->db->from('product');
-		$this->db->where('product_quantity < product_inbound_threshold');
+		$this->db->where('product_quantity < product_minimum_quantity');
 		$query = $this->db->get();
 
 		return $query->result();
@@ -415,5 +295,97 @@ class Product_model extends CI_Model
 		} else {
 			return false;
 		}
+	}
+
+	public function receiving_no()
+	{
+		$year = date('Y');
+		$text = "RN" . '-' . $year;
+		$query = "SELECT max(receiving_no) as code_auto from receiving";
+		$data = $this->db->query($query)->row_array();
+		if ($data && isset($data["code_auto"])) {
+			$max_code = $data['code_auto'];
+			$max_code2 =  (int)substr($max_code, 8, 5);
+			$codecount = $max_code2 + 1;
+			$code_auto = $text . '-' . sprintf('%03s', $codecount);
+			return $code_auto;
+		} else {
+			// Log error or return a default value
+			error_log("No existing receiving numbers found.");
+			return $text . '-' . sprintf('%03s', 1);
+		}
+	}
+
+	public function insert_received_quantity($image_file_name)
+	{
+		$product_id = (int) $this->input->post('product_id');
+		$product_quantity = (int) $this->input->post('product_quantity');
+		$product_code = $this->input->post('product_code');
+		$product_name = $this->input->post('product_name');
+		$username = $this->input->post('username');
+		$product_uom = $this->input->post('product_uom');
+		$comments = $this->input->post('comments');
+		$rn = $this->input->post('rn');
+
+		// Get the current product quantity
+		$this->db->select('product_quantity');
+		$this->db->where('product_id', $product_id);
+		$query = $this->db->get('product');
+		$current_quantity = $query->row()->product_quantity;
+
+		// Calculate the new total quantity
+		$new_quantity = $current_quantity + $product_quantity;
+
+		// Update the product quantity in the database
+		$this->db->where('product_id', $product_id);
+		$response = $this->db->update('product', array('product_quantity' => $new_quantity));
+
+		if ($response) {
+
+			$data = array(
+				'receiving_no' => $rn,
+				'product_code' => $product_code,
+				'product_name' => $product_name,
+				'inbound_quantity' => $product_quantity,
+				'date' => date('Y-m-d H:i:s'),
+				'username' => $username,
+				'product_uom' => $product_uom,
+				'comments' => $comments,
+				'product_image' => $image_file_name,
+
+			);
+			$this->db->where('product_id', $product_id);
+			$this->db->insert('receiving', $data);
+
+			$data_inventory_ledger = [
+				'product_name' => $product_name,
+				'unit' => $product_uom, // Adjust based on your unit information
+				'quantity' => $product_quantity, // Negative quantity for sales
+				'price' => '0',
+				'activity' => 'Inbound', // Adjust based on your activity types
+				'date_posted' => date('Y-m-d'), // Adjust based on your date format
+			];
+
+			$this->db->insert('inventory_ledger', $data_inventory_ledger);
+
+			return $this->db->insert_id();
+		} else {
+			return FALSE;
+		}
+	}
+	function get_receiving($id)
+	{
+		$this->db->select('*');
+		$this->db->from('receiving');
+		$this->db->where('receiving_id', $id);
+		$query = $this->db->get()->row();
+		return $query;
+	}
+	function get_all_receiving()
+	{
+		$this->db->select('*');
+		$this->db->from('receiving');
+		$query = $this->db->get()->result();
+		return $query;
 	}
 }

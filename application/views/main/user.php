@@ -1,4 +1,5 @@
 <h4>User Management</h4>
+
 <div class="card" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
   <div class="card-header">
     <a href="<?php echo site_url('main/add_user'); ?>" class="btn btn-success btn-sm "><i class="fas fa-user-plus"></i>

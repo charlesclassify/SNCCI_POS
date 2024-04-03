@@ -56,40 +56,21 @@
 						<input type="password" id="password1" placeholder="Confirm Password" name="password1" class="form-control <?php echo form_error('password1') ? 'is-invalid' : ''; ?>">
 						<span style="color: red;"><?php echo form_error('password1'); ?></span>
 					</div>
-
 					<div class="form-group">
-
-						<label for="branch" class="bold-label">Branch</label><br>
-						<select name="branch" id="branch-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="selectpicker <?php echo form_error('branch') ? 'is-invalid' : ''; ?>">
-							<option class="text-info invisible" value="<?= $select->branch ?>"><?= ucfirst($select->branch) ?></option>
-							<?php foreach ($branch as $br) { ?>
-
-								<option value="<?= $br->branch_id ?>"><?= $br->branch ?></option>
-
-							<?php } ?>
-
-
-
+						<label for="warehouse" class="bold-label">Warehouse</label><br>
+						<select name="warehouse" id="warehouse-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="form-control <?php echo form_error('warehouse') ? 'is-invalid' : ''; ?>">
+							<option value="<?php echo set_value('warehouse', $user->warehouse); ?>" selected hidden><?php echo set_value('warehouse', $user->warehouse); ?></option>
+							<option value="Warehouse 1">Warehouse 1</option>
 						</select>
-						<?php echo form_error('role'); ?>
+						<span class="text-danger"><?php echo form_error('warehouse'); ?></span>
 					</div>
-
 					<div class="form-group">
-
 						<label for="role" class="bold-label">Roles</label><br>
-						<select name="role" id="role-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="selectpicker <?php echo form_error('role') ? 'is-invalid' : ''; ?>">
+						<select name="role" id="role-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="form-select" <?php echo form_error('role') ? 'is-invalid' : ''; ?>">
 							<option class="text-info invisible" value="<?= $user->role ?>"><?= ucfirst($user->role) ?></option>
-							<option value="super-admin">Admin</option>
-							<option value="branch admin">Branch Admin</option>
-							<option value="inventory clerk">Inventory Clerk</option>
-							<option value="cashier">Cashier</option>
-							<option value="branch supervisor">Branch Supervisor</option>
-							<option value="finance">Fianance</option>
-							<option value="accounting">Accounting</option>
-							<option value="branch clerk">Branch clerk</option>
-							<option value="warehouse clerk">Warehouse Clerk</option>
-							<option value="warehouse supervisor">Warehouse Supervisor</option>
-
+							<option value="Admin">Admin</option>
+							<option value="Inbound User">Inbound User</option>
+							<option value="Outbound User">Outbound User</option>
 						</select>
 						<?php echo form_error('role'); ?>
 					</div>

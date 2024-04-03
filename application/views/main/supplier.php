@@ -13,6 +13,7 @@
                         <th>Company</th>
                         <th>Contact</th>
                         <th>Email</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -26,6 +27,20 @@
                             <td><?= $row->company_name ?></td>
                             <td><?= $row->supplier_contact ?></td>
                             <td><?= $row->supplier_email ?></td>
+                            <td>
+                                <?php if ($row->status_supplier == "deactivated") { ?>
+                                    <span class="badge bg-danger">
+                                        <?= ucfirst($row->status_supplier) ?>
+                                    </span>
+                                <?php
+                                } else {
+                                ?>
+                                    <span class="badge bg-success">
+                                        <?= ucfirst($row->status_supplier) ?>
+                                    </span>
+                                <?php
+                                } ?>
+                            </td>
                             <td>
                                 <a href="<?php echo site_url('main/view_supplier/' . $row->supplier_id); ?>" style="color: darkcyan; padding-left:6px;" title="Click here to view supplier details"><i class="fas fa-eye"></i></a>
                                 <a href="<?php echo site_url('main/editsupplier/' . $row->supplier_id); ?>" style="color:gold; padding-left:6px;" title="Click here to edit supplier details"> <i class="fas fa-edit"></i></a>

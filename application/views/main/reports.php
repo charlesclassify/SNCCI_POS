@@ -23,13 +23,12 @@
     <!-- Navigation for Modules -->
     <ul class="nav nav-tabs" id="moduleTabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#module1">Sales Report</a>
+
+            <a class="nav-link active" data-toggle="tab" href="#module2">Receiving Report</a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module2">Receiving Report</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module3">Inventory Report</a>
+            <a class="nav-link" data-toggle="tab" href="#module4">Inventory Report</a>
 
         </li>
         <!-- Add more modules as needed -->
@@ -68,39 +67,41 @@
         </div>
 
         <!-- Receiving Report -->
-        <div class="tab-pane fade" id="module2">
+        <div class="tab-pane fade show active" id="module2">
             <table class="table" id="user-datatables-module2">
                 <thead>
                     <tr>
-                        <th>Goods Received No.</th>
-                        <th>Supplier</th>
-                        <th>Date Received</th>
-                        <th>Total Cost</th>
-                        <th>Status</th>
+                        <th>Receiving No</th>
+                        <th>Product Code</th>
+                        <th>Product Name</th>
+                        <th>Inbound Quantity</th>
+                        <th>Date</th>
+                        <th>Incharge</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($gr as $grs) { ?>
+                    <?php foreach ($receiving as $r) { ?>
                         <tr>
-                            <td><?= $grs->goods_received_no ?></td>
-                            <td><?= $grs->supplier_name ?></td>
-                            <td><?= $grs->date_received ?></td>
-                            <td>₱<?= $grs->gr_total_cost ?></td>
+                            <td><?= $r->receiving_no ?></td>
+                            <td><?= $r->product_code ?></td>
+                            <td><?= $r->product_name ?></td>
+                            <td><?= $r->inbound_quantity ?></td>
+                            <td><?= $r->date ?></td>
+                            <td><?= $r->username ?></td>
                             <td>
-                                <span class="badge bg-success"><?= ucfirst($grs->status) ?></span>
-                            </td>
-                            <td>
-                                <a href="<?php echo site_url('main/print_goods_received/' . $grs->goods_received_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
+                                <a href="<?php echo site_url('main/inbound_receipt/' . $r->receiving_no); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
                             </td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
         </div>
+
         <!-- Inventory Adjustment Report -->
         <div class="tab-pane fade" id="module3">
             <table class="table" id="user-datatables-module3">
+
                 <thead>
                     <tr>
                         <th>No.</th>
