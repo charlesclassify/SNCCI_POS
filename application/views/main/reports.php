@@ -22,17 +22,14 @@
 
     <!-- Navigation for Modules -->
     <ul class="nav nav-tabs" id="moduleTabs">
-
         <li class="nav-item">
+
             <a class="nav-link active" data-toggle="tab" href="#module2">Receiving Report</a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#module4">Inventory Report</a>
 
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module5">Sales Report</a>
         </li>
         <!-- Add more modules as needed -->
     </ul>
@@ -41,6 +38,34 @@
     <!-- Purchase Order Report -->
 
     <div class="tab-content" id="moduleTabContent">
+        <!-- Module 1 Content -->
+        <div class="tab-pane fade show active" id="module1">
+            <table class="table" id="user-datatables-module1">
+                <thead>
+                    <tr>
+                        <th>Reference No.</th>
+                        <th>Date Created</th>
+                        <th>Customer</th>
+                        <th>Total Cost</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($sa as $sales) { ?>
+                        <tr>
+                            <td><?= $sales->reference_no ?></td>
+                            <td><?= $sales->date_created ?></td>
+                            <td><?= ucfirst($sales->customer_name) ?></td>
+                            <td>₱<?= $sales->total_cost ?></td>
+                            <td>
+                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+
         <!-- Receiving Report -->
         <div class="tab-pane fade show active" id="module2">
             <table class="table" id="user-datatables-module2">
@@ -73,12 +98,10 @@
             </table>
         </div>
 
-        <!-- Goods Return Report -->
-
-
         <!-- Inventory Adjustment Report -->
-        <div class="tab-pane fade" id="module4">
-            <table class="table" id="user-datatables-module4">
+        <div class="tab-pane fade" id="module3">
+            <table class="table" id="user-datatables-module3">
+
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -103,33 +126,5 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Sales Report -->
-        <div class="tab-pane fade" id="module5">
-            <table class="table" id="user-datatables-module5">
-                <thead>
-                    <tr>
-                        <th>Reference No.</th>
-                        <th>Date Created</th>
-                        <th>Payment Method</th>
-                        <th>Total Cost</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($sa as $sales) { ?>
-                        <tr>
-                            <td><?= $sales->reference_no ?></td>
-                            <td><?= $sales->date_created ?></td>
-                            <td><?= ucfirst($sales->payment_method) ?></td>
-                            <td>₱<?= $sales->total_cost ?></td>
-                            <td>
-                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div> <!-- Add more modules as needed -->
     </div>
 </div>

@@ -135,13 +135,13 @@
             </table>
         </div>
     </div>
+    <div class="customer_cont">
+        <div>Customer:</div>
+        <div id="customer"><?= $code->customer_name ?></div>
+    </div>
     <div class="recepit_cont">
         <div>Total:</div>
         <div id="totalAmount"><?= $code->total_cost ?></div>
-    </div>
-    <div class="recepit_cont">
-        <div>Payment Method:</div>
-        <div id="paymentMethod"><?= ucfirst($code->payment_method) ?></div>
     </div>
     <h3>Reference No.: <?= $code->reference_no ?> | Date: <?= $code->date_created ?></h3>
     <div class="print-button" id="printButton">

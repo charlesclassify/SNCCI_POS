@@ -5,9 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
   <title>GFI Management System</title>
 
-  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/southwinds_logo.png" />
+
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/logogfi.png" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -101,8 +103,6 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-dark "></i></a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
-
           <li><a class="dropdown-item" href="<?= base_url('main/logout') ?>">Logout</a></li>
         </ul>
       </li>
@@ -115,35 +115,35 @@
           <div class="nav">
             <div class="sb-sidenav-menu-heading">General</div>
 
-            <a id="nav-link" class="nav-link" href="<?= base_url('main/') ?>">
+            <a id="nav-link" class="nav-link" href="<?= base_url('main/dashboard') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-tachometer-alt"></i>
+                <i class="fas fa-tachometer-alt text-dark"></i>
               </div>
               Dashboard
             </a>
 
             <a id="nav-link" class="nav-link" href="<?= base_url('main/user') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user text-dark"></i>
               </div>
               User
             </a>
             <a id="nav-link" class="nav-link" href="<?= base_url('main/supplier') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-truck"></i>
+                <i class="fas fa-truck text-dark"></i>
               </div>
               Supplier
             </a>
             <a id="nav-link" class="nav-link" href="<?= base_url('main/product') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-box"></i>
+                <i class="fas fa-box text-dark"></i>
               </div>
               Product
             </a>
 
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-archive"></i>
+                <i class="fas fa-archive text-dark"></i>
               </div>
               Inventory
               <div class="sb-sidenav-collapse-arrow">
@@ -159,20 +159,20 @@
 
             <a id="nav-link" class="nav-link" href="<?= base_url('main/pos') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-cash-register"></i>
+                <i class="fas fa-cash-register text-dark"></i>
               </div>
               POS
             </a>
             <a id="nav-link" class="nav-link" href="<?= base_url('main/reports') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-chart-bar"></i>
+                <i class="fas fa-chart-bar text-dark"></i>
               </div>
               Reports
             </a>
 
             <a id="nav-link" class="nav-link" href="<?= base_url('main/backup') ?>">
               <div class="sb-nav-link-icon">
-                <i class="fas fa-database"></i>
+                <i class="fas fa-database text-dark"></i>
               </div>
               Backup & Restore
             </a>

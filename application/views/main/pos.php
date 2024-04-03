@@ -112,24 +112,32 @@
                         <!-- Add the search input and button inside the card header -->
                         <div class="input-group mb-1">
                             <input type="text" class="form-control" id="product-search" placeholder="Search for a product">
-                            <button class="btn btn-secondary" id="search-button">Search</button>
+                            <button class="btn btn-success" id="search-button">Search</button>
                         </div>
                     </div>
-                    <div class="card-body" id="product-list">
-                        <div class="row">
-                            <?php foreach ($result as $product) { ?>
-                                <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
-                                    <div class="card product-card" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>" data-product-image="<?php echo base_url('assets/images/' . $product->product_image); ?>">
-                                        <div class="card-body" style="height: 300px;">
-                                            <h5 class="card-title" style="max-width: 100%;">
-                                                <?php echo $product->product_name; ?>
-                                            </h5>
-                                            <img src="<?php echo base_url('assets/images/' . $product->product_image); ?>" alt="<?php echo $product->product_name; ?>" class="img-fluid mb-3" style="max-width: 100%; max-height: 300px;">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        </div>
+                    <div class="card-body">
+                        <table class="table table-bordered" id="product-table">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-list-body" class="text-center">
+                                <?php foreach ($result as $product) { ?>
+                                    <tr class="product-row" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>">
+                                        <td><?php echo $product->product_name; ?></td>
+                                        <td>₱<?php echo $product->product_price; ?></td>
+                                        <td><button class="btn btn-success add-to-cart">Add to Cart</button></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                        <!-- Pagination -->
+                        <nav aria-label="Product Pagination">
+                            <ul class="pagination justify-content-center" id="pagination"></ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -171,7 +179,7 @@
                             <button class="btn btn-secondary numeric-button" data-key="0">0</button>
                             <button class="btn btn-secondary numeric-button" data-key=".">.</button>
                             <button class="btn btn-secondary clear-button">Clear</button>
-                            <a href="<?php echo site_url('main/payment'); ?>" class="btn btn-warning payment-button">
+                            <a href="<?php echo site_url('main/payment'); ?>" class="btn btn-success payment-button">
                                 Payment <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -184,48 +192,80 @@
     <!-- Add this script at the end of your page, after including jQuery -->
     <script>
         $(document).ready(function() {
+            // Variables for pagination
+            var currentPage = 1;
+            var productsPerPage = 10;
+            var totalProducts = <?php echo count($result); ?>;
+            var totalPages = Math.ceil(totalProducts / productsPerPage);
+            var productsData = <?php echo json_encode($result); ?>;
 
-            // Store all product cards in an array
-            var allProductCards = $('.product-card');
+            // Function to display products for the current page
+            function displayProducts() {
+                var startIndex = (currentPage - 1) * productsPerPage;
+                var endIndex = startIndex + productsPerPage;
+                var filteredProducts = productsData;
 
-            $('#search-button').on('click', function() {
-                performSearch();
-            });
-
-            // Add an input event listener to the search input
-            $('#product-search').on('input', function() {
-                performSearch();
-            });
-
-            var originalProductListHTML = $('#product-list').html();
-
-            function performSearch() {
-                var searchTerm = $('#product-search').val().toLowerCase();
-
-                // Clear the product list
-                $('#product-list').empty();
-
-                if (searchTerm === '') {
-                    // If the search term is empty, restore the original product list
-                    $('#product-list').html(originalProductListHTML);
-                } else {
-                    // Filter and display products that match the search term
-                    allProductCards.each(function() {
-                        var productName = $(this).data('product-name').toLowerCase();
-                        if (productName.startsWith(searchTerm)) {
-                            // Create a horizontal list for searched products
-                            var productCard = $('<div class="d-inline-block mr-3"></div>');
-                            productCard.append($(this).clone());
-                            $('#product-list').append(productCard);
-                        }
+                // Filter products based on search term
+                var searchTerm = $('#product-search').val().toLowerCase().trim();
+                if (searchTerm !== '') {
+                    filteredProducts = productsData.filter(function(product) {
+                        return product.product_name.toLowerCase().includes(searchTerm);
                     });
+                }
+
+                // Slice the filtered products based on pagination
+                var productsToDisplay = filteredProducts.slice(startIndex, endIndex);
+
+                $('#product-list-body').empty();
+                productsToDisplay.forEach(function(product) {
+                    var productRow = '<tr class="product-row" data-product-name="' + product.product_name + '" data-product-price="' + product.product_price + '">';
+                    productRow += '<td>' + product.product_name + '</td>';
+                    productRow += '<td>' + '₱' + product.product_price + '</td>';
+                    productRow += '<td><button class="btn btn-success add-to-cart">Add to Cart</button></td>';
+                    productRow += '</tr>';
+                    $('#product-list-body').append(productRow);
+                });
+
+                // Update pagination
+                updatePagination();
+            }
+
+            // Function to update pagination
+            function updatePagination() {
+                $('#pagination').empty();
+                for (var i = 1; i <= totalPages; i++) {
+                    var liClass = (i === currentPage) ? 'page-item active' : 'page-item';
+                    var pageLink = '<li class="' + liClass + '"><a class="page-link" href="#">' + i + '</a></li>';
+                    $('#pagination').append(pageLink);
                 }
             }
 
-            // Event handler for selecting items in the product list
-            $(document).on('click', '.product-card', function() {
-                var productName = $(this).data('product-name');
-                var productPrice = parseFloat($(this).data('product-price'));
+            // Initial display of products and pagination
+            displayProducts();
+
+            // Pagination click event
+            $('#pagination').on('click', '.page-link', function(event) {
+                event.preventDefault();
+                currentPage = parseInt($(this).text());
+                displayProducts();
+            });
+
+            // Search button click event
+            $('#search-button').on('click', function() {
+                currentPage = 1; // Reset to the first page when searching
+                displayProducts();
+            });
+
+            // Search input keyup event for live search
+            $('#product-search').on('input', function() {
+                currentPage = 1; // Reset to the first page when searching
+                displayProducts();
+            });
+
+            // Add to Cart button click event remains unchanged
+            $('#product-table').on('click', '.add-to-cart', function() {
+                var productName = $(this).closest('.product-row').data('product-name');
+                var productPrice = parseFloat($(this).closest('.product-row').data('product-price'));
 
                 // Check if the product is already in the cart
                 if (isProductInCart(productName)) {
@@ -283,33 +323,27 @@
                 updateTotal();
             });
 
-
             // Event handler for deleting items from the cart
             $('#table_field tbody').on('click', '.delete-item', function() {
                 var listItem = $(this).closest('tr');
                 var itemPrice = parseFloat(listItem.data('product-price'));
+                var quantity = parseFloat(listItem.find('.product-quantity').val());
 
-                // Update the total price by subtracting the item price
-                updateTotal(-itemPrice);
+                // Calculate the total price of the item being deleted
+                var totalPriceOfItem = itemPrice * quantity;
+
+                // Update the total price by subtracting the total price of the item
+                updateTotal(-totalPriceOfItem);
 
                 // Remove the item from the cart
                 listItem.remove();
+
+                // Update localStorage after removing the item
+                updateLocalStorage();
             });
 
-            // Function to check if a product is already in the cart
-            function isProductInCart(productName) {
-                var inCart = false;
-                $('#table_field tbody').find('tr').each(function() {
-                    var cartProductName = $(this).data('product-name');
-                    if (cartProductName === productName) {
-                        inCart = true;
-                        return false; // Exit the loop early since we found a match
-                    }
-                });
-                return inCart;
-            }
-
-            function updateTotal() {
+            // Function to update the total price when adding or deleting items from the cart
+            function updateTotal(change = 0) {
                 // Calculate and update the total price for all products in the cart
                 var total = 0;
                 $('#table_field tbody').find('tr').each(function() {
@@ -322,15 +356,26 @@
                     $(this).find('.product-total').text(totalPrice.toFixed(2));
                 });
 
+                // Add the change to the total (if any)
+                total += change;
+
                 $('#total').text(total.toFixed(2));
 
-                // Store the total price in a JavaScript variable
-                var totalPriceForCheckout = total;
+                // Store the total price in localStorage
+                localStorage.setItem('totalPriceForCheckout', total);
+            }
 
-                // Update the total price on the payment page (assuming you have a way to pass this data)
-                // For example, you can use a query parameter in the URL or use localStorage.
-                // Here, we'll update the total pricein localStorage.
-                localStorage.setItem('totalPriceForCheckout', totalPriceForCheckout);
+            // Function to check if a product is already in the cart
+            function isProductInCart(productName) {
+                var inCart = false;
+                $('#table_field tbody').find('tr').each(function() {
+                    var cartProductName = $(this).data('product-name');
+                    if (cartProductName === productName) {
+                        inCart = true;
+                        return false; // Exit the loop early since we found a match
+                    }
+                });
+                return inCart;
             }
 
             // Event handler for clearing all quantities when the "Clear" button is clicked

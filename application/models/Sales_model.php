@@ -24,7 +24,7 @@ class Sales_model extends CI_Model
         $sales = [
             'reference_no' => $this->input->post('reference_no'),
             'date_created' => $this->input->post('date_created'),
-            'payment_method' => $this->input->post('payment_method')
+            'customer_name' => $this->input->post('customer_name'),
         ];
 
         $this->db->insert('sales_no', $sales);
@@ -73,9 +73,9 @@ class Sales_model extends CI_Model
             $data_inventory_ledger = [
                 'product_name' => $product_name,
                 'unit' => 'Pcs', // Adjust based on your unit information
-                'quantity' => -$quantity_value, // Negative quantity for sales
+                'quantity' => $quantity_value, // Negative quantity for sales
                 'price' => $product_price_value,
-                'activity' => 'Inbound', // Adjust based on your activity types
+                'activity' => 'Outbound', // Adjust based on your activity types
                 'date_posted' => date('Y-m-d'), // Adjust based on your date format
             ];
 

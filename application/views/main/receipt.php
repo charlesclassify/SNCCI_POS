@@ -16,6 +16,8 @@
         max-width: 300px;
         margin: 50px auto 0;
         font-family: 'Source Sans Pro', sans-serif;
+        position: relative;
+        /* Added position relative */
     }
 
     .receipt_header {
@@ -54,8 +56,7 @@
     }
 
     .recepit_cont,
-    .cashpayment_cont,
-    .change_cont {
+    .customer_cont {
         display: flex;
         justify-content: space-between;
         font-weight: bold;
@@ -93,17 +94,109 @@
             visibility: visible;
         }
 
+        /* Adjustments for printing */
         .container {
-            position: absolute;
-            left: 0;
-            top: 0;
+            max-width: 300px;
+            /* Set the max-width for the receipt */
+            width: 100%;
+            /* Make sure the receipt occupies the full width of the printed page */
+            margin: 0 auto;
+            /* Center the receipt on the printed page */
+            padding: 10px;
+            /* Add some padding */
+            border: 1px solid #333;
+            /* Add a border for a bordered appearance */
+            box-shadow: none;
+            /* Remove the box shadow */
+            position: static;
+            /* Set position to static */
         }
+
+        .receipt_header h1 {
+            font-size: 20px;
+            /* Decrease the font size of the header */
+            margin-bottom: 3px;
+            /* Adjust the margin */
+        }
+
+        .receipt_header h2 {
+            font-size: 12px;
+            /* Decrease the font size of the sub-header */
+            margin-bottom: 10px;
+            /* Adjust the margin */
+        }
+
+        .receipt_body {
+            margin-top: 5px;
+            /* Adjust the margin */
+        }
+
+        table {
+            margin-top: 5px;
+            /* Adjust the margin */
+        }
+
+        th,
+        td {
+            padding: 5px;
+            /* Adjust the padding */
+        }
+
+        .recepit_cont,
+        .customer_cont {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 12px;
+            /* Decrease the font size */
+        }
+
+        .recepit_cont div,
+        .customer_cont div {
+            flex-basis: 48%;
+            /* Adjust the width */
+        }
+
+        h3 {
+            margin-top: 10px;
+            /* Adjust the margin */
+            font-size: 10px;
+            /* Decrease the font size */
+        }
+
+        .print-button {
+            display: none;
+            /* Hide the print button when printing */
+        }
+    }
+
+    /* Additional CSS for displaying customer name on the same line */
+    .customer_cont {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        align-items: baseline;
+        /* Align items to the baseline */
+    }
+
+    .customer_cont div {
+        flex-basis: 30%;
+        /* Adjust the width as needed */
+    }
+
+    .customer_cont #customer {
+        flex-basis: 70%;
+        /* Adjust the width as needed */
+        font-weight: bold;
+        text-align: right;
+        /* Align the text to the right */
     }
 </style>
 
 <div class="container">
     <div class="receipt_header">
-        <h1><i class="fas fa-shopping-basket"></i> COMPANY</h1>
+        <h1> GENSAN FEEDMILL, INC.</h1>
+        <h3> Outbound Receipt</h3>
         <h2>Prepared By: <?= ucfirst($this->session->userdata('UserLoginSession')['username']) ?></h2>
     </div>
     <div class="receipt_body">
@@ -118,21 +211,13 @@
             </table>
         </div>
     </div>
+    <div class="customer_cont">
+        <div>Customer:</div>
+        <div id="customer"></div>
+    </div>
     <div class="recepit_cont">
         <div>Total:</div>
         <div id="totalAmount"></div>
-    </div>
-    <div class="recepit_cont">
-        <div>Payment Method:</div>
-        <div id="paymentMethod"></div>
-    </div>
-    <div class="cashpayment_cont">
-        <div>Cash Payment:</div>
-        <div id="cashpayment"></div>
-    </div>
-    <div class="change_cont">
-        <div>Change:</div>
-        <div id="change"></div>
     </div>
     <h3>Reference No.: <span id="referenceNo"></span> | Date: <?php echo date('m/d/y'); ?></h3>
     <div class="print-button" id="printButton">
@@ -140,6 +225,7 @@
     </div>
 </div>
 
+<!-- Your JavaScript imports and scripts -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Retrieve stored product data from localStorage
@@ -164,23 +250,17 @@
         // Display total amount
         document.getElementById('totalAmount').textContent = '₱' + totalAmount.toFixed(2);
 
-        // Retrieve and display payment method value
-        var storedPaymentMethod = localStorage.getItem('selectedPaymentMethod');
-        var capitalizedPaymentMethod = storedPaymentMethod.charAt(0).toUpperCase() + storedPaymentMethod.slice(1);
-        document.getElementById('paymentMethod').textContent = '' + capitalizedPaymentMethod;
-
         // Retrieve stored payment data from localStorage
         var storedPaymentData = localStorage.getItem('paymentData');
         var paymentData = JSON.parse(storedPaymentData);
 
-        // Display payment data
-        document.getElementById('totalAmount').textContent = '₱' + paymentData.totalAmount;
-        document.getElementById('cashpayment').textContent = '₱' + paymentData.cashPayment;
-        document.getElementById('change').textContent = '₱' + paymentData.change;
-
         // Retrieve and display reference number
         var storedReferenceNo = localStorage.getItem('referenceNo');
         document.getElementById('referenceNo').textContent = storedReferenceNo;
+
+        // Retrieve and display customer name
+        var customerName = localStorage.getItem('customerName');
+        document.getElementById('customer').textContent = customerName;
 
         // Handle printing
         var printButton = document.getElementById('printButton');
@@ -207,20 +287,17 @@
                 }
             }, 1000); // Adjust the delay as needed
         }
+
         // Automatically trigger the print dialog
         printReceipt();
     });
-
-
 
     function clearCartItems() {
         cartItems = []; // Clear the cart items
         updateCartDisplay(); // Update the table (payment-table) in the HTML 
     }
 
-
     window.addEventListener('beforeunload', function(event) {
-
         localStorage.removeItem('cartItems');
         clearCartItems();
     });

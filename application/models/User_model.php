@@ -85,12 +85,11 @@ class User_model extends CI_Model
 
 	function checkPassword($password, $username)
 	{
-		$this->db->select('*');
-		$this->db->from('user');
-		$this->db->where('password', $password);
-		$this->db->where('username', $username);
-		$this->db->where('status', 'active');
-		$query = $this->db->get();
+		// Hash the input password using SHA1
+		$hashed_password = sha1($password);
+
+		// Retrieve user from database by username and hashed password
+		$query = $this->db->query("SELECT * FROM user WHERE username = ? AND password = ?", array($username, $hashed_password));
 
 		if ($query->num_rows() == 1) {
 			return $query->row();
@@ -98,6 +97,7 @@ class User_model extends CI_Model
 			return false;
 		}
 	}
+
 	public function deactivate_user($user_id)
 	{
 		$data = array(
