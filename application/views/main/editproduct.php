@@ -87,15 +87,14 @@
 
 					<div class="form-group col-md-4 d-inline-block">
 						<label class="bold-label">Unit of Measure</label>
-						<div class="input-group">
-							<input type="text" aria-label="product_uom_value" placeholder="Enter Unit Value" value="<?= set_value('product_uom_value', $product->product_uom_value); ?>" class="form-control ">
-							<select class="form-control form-control" name="product_uom" id="uom" title="Please enter unit" required>
-								<option value="<?= set_value('product_uom', $product->product_uom); ?>" selected hidden><?= set_value('product_uom', $product->product_uom); ?></option>
-								<?php foreach ($unit as $pro) { ?>
-									<option value="<?= $pro->unit ?>"><?= $pro->unit ?></option>
-								<?php } ?>
-							</select>
-						</div>
+
+						<select class="form-control form-control" name="product_uom" id="uom" title="Please enter unit" required>
+							<option value="<?= set_value('product_uom', $product->product_uom); ?>" selected hidden><?= set_value('product_uom', $product->product_uom); ?></option>
+							<?php foreach ($unit as $pro) { ?>
+								<option value="<?= $pro->unit ?>"><?= $pro->unit ?></option>
+							<?php } ?>
+						</select>
+
 					</div>
 					<div class="form-group col-md-3 d-inline-block">
 						<label class="bold-label">Minimum Quantity</label>
@@ -113,14 +112,14 @@
 
 
 
-				<div class="section">
+				<!--div class="section">
 					<h5>Image</h5>
 					<div class="form-group col-md-6 d-inline-block">
 						<label for="product_image" class="bold-label">Product Image</label>
 						<input type="file" id="product_image" name="product_image" value="<?= set_value('product_image'); ?>" class="form-control <?= form_error('product_image') ? 'is-invalid' : ''; ?>">
 						<span style="color: red;"><?= form_error('product_image'); ?></span>
 					</div>
-				</div>
+				</div-->
 
 				<input type="hidden" name="product_id" value="<?= $product->product_id; ?>">
 

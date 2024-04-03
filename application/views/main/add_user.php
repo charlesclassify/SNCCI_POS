@@ -43,46 +43,31 @@
 					<input type="password" id="password" placeholder="Password" name="password" value="<?php echo set_value('password'); ?>" class="form-control <?php echo form_error('password') ? 'is-invalid' : ''; ?>">
 				</div>
 
+				<div class="form-group">
+					<label for="warehouse" class="bold-label">Warehouse</label><br>
+					<select name="warehouse" id="warehouse-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="form-control <?php echo form_error('warehouse') ? 'is-invalid' : ''; ?>">
+						<option selected hidden>Select Warehouse</option>
+						<option value="Warehouse 1">Warehouse 1</option>
 
-						<label for="warehouse" class="bold-label">Warehouse</label><br>
-						<select name="warehouse" id="warehouse-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="form-control <?php echo form_error('warehouse') ? 'is-invalid' : ''; ?>">
-							<option selected hidden>Select Warehouse</option>
-							<option value="super-admin">Warehouse 1</option>
+					</select>
 
-						</select>
-
-						<span class="text-danger"><?php echo form_error('warehouse'); ?></span>
-					</div>
-
-
-
-
-							<option value="admin">Admin</option>
-							<option value="inbound user">Inbound User</option>
-							<option value="outbound user">Outbound User</option>
-
+					<span class="text-danger"><?php echo form_error('warehouse'); ?></span>
+				</div>
 
 				<div class="form-group">
 					<label for="role" class="bold-label">Roles</label><br>
 					<select name="role" id="role-select" data-live-search="true" data-style="btn-sm btn-outline-secondary" class="form-control <?php echo form_error('role') ? 'is-invalid' : ''; ?>">
 						<option selected hidden>Select Role</option>
 
-						<option value="super-admin">Admin</option>
-						<option value="branch admin">Branch Admin</option>
-						<option value="inventory clerk">Inventory Clerk</option>
-						<option value="cashier">Cashier</option>
-						<option value="branch supervisor">Branch Supervisor</option>
-						<option value="finance">Finance</option>
-						<option value="accounting">Accounting</option>
-						<option value="branch clerk">Branch clerk</option>
-						<option value="warehouse clerk">Warehouse Clerk</option>
-						<option value="warehouse supervisor">Warehouse Supervisor</option>
+
+						<option value="Admin">Admin</option>
+						<option value="Inbound User">Inbound User</option>
+						<option value="Outbound User">Outbound User</option>
+
 
 					</select>
 					<span class="text-danger"><?php echo form_error('role'); ?></span>
 				</div>
-
-				<!-- Add the other form fields in a similar manner -->
 
 				<div class="mt-4">
 					<button type="submit" name="submit" class="btn btn-primary"><i class="fas fa-save"></i> Submit</button>

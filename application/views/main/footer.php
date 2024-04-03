@@ -20,19 +20,21 @@
   // Your DataTable initialization scripts
   $(document).ready(function() {
     $('#user-datatables').dataTable({
-      "lengthMenu": [5, 10, 25, 50, 75, 100]
+      "lengthMenu": [10, 25, 50, 75, 100]
     });
 
     // Initialize DataTable for Module 1
     $('#user-datatables-module1').DataTable({
       "lengthMenu": [5, 10, 25, 50, 75, 100]
     });
+    $(document).ready(function() {
 
-    // Initialize DataTable for Module 2
-    $('#user-datatables-module2').DataTable({
-      "lengthMenu": [5, 10, 25, 50, 75, 100]
+      var table = $('#user-datatables-module2').DataTable({
+        "lengthMenu": [5, 10, 25, 50, 75, 100]
+      });
+      var totalPages = table.page.info().pages;
+      table.page(totalPages - 1).draw('page');
     });
-
     // Initialize DataTable for Module 3
     $('#user-datatables-module3').DataTable({
       "lengthMenu": [5, 10, 25, 50, 75, 100]

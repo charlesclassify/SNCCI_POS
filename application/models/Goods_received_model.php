@@ -280,4 +280,21 @@ class Goods_received_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+
+    function get_all_receiving()
+    {
+        $this->db->select('*');
+        $this->db->from('receiving');
+        $query = $this->db->get()->result();
+        return $query;
+    }
+
+    function get_receipt_details($receiving_no)
+    {
+        $this->db->select('*');
+        $this->db->from('receiving');
+        $this->db->where('receiving_no', $receiving_no);
+        $query = $this->db->get()->result();
+        return $query;
+    }
 }

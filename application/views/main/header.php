@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Southwinds Hotel</title>
+  <title>GFI Management System</title>
 
   <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/southwinds_logo.png" />
 
@@ -101,12 +101,9 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-dark "></i></a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#!">Settings</a></li>
-          <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-          <li><a class="dropdown-item" href="<?= base_url('bookings/logout') ?>">Logout</a></li>
+
+
+          <li><a class="dropdown-item" href="<?= base_url('main/logout') ?>">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -187,4 +184,3 @@
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid px-4">
-
