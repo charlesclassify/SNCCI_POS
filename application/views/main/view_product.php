@@ -67,11 +67,9 @@
 
                     <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Unit of Measure</label>
-                        <?php if ($product->product_uom_value == 0) { ?>
-                            <p><?= $product->product_uom; ?></p>
-                        <?php } else { ?>
-                            <p><?= $product->product_uom_value; ?> <?= $product->product_uom; ?></p>
-                        <?php } ?>
+
+                        <p><?= $product->product_uom; ?></p>
+
                     </div>
 
                     <div class="form-group col-md-3 d-inline-block">
