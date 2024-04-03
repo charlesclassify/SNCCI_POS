@@ -23,20 +23,14 @@
     <!-- Navigation for Modules -->
     <ul class="nav nav-tabs" id="moduleTabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#module1">Purchase Order Report</a>
+            <a class="nav-link active" data-toggle="tab" href="#module1">Sales Report</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#module2">Receiving Report</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module3">Goods Return Report</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module4">Inventory Report</a>
+            <a class="nav-link" data-toggle="tab" href="#module3">Inventory Report</a>
 
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module5">Sales Report</a>
         </li>
         <!-- Add more modules as needed -->
     </ul>
@@ -50,23 +44,23 @@
             <table class="table" id="user-datatables-module1">
                 <thead>
                     <tr>
-                        <th>Purchase Order No.</th>
-                        <th>Supplier</th>
+                        <th>Reference No.</th>
                         <th>Date Created</th>
+                        <th>Customer</th>
                         <th>Total Cost</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($po as $pur) { ?>
+                    <?php foreach ($sa as $sales) { ?>
                         <tr>
-                            <td><?= $pur->purchase_order_no ?></td>
-                            <td><?= $pur->supplier_name ?></td>
-                            <td><?= $pur->date_created ?></td>
-                            <td>₱<?= $pur->total_cost ?></td>
-                            <td><?= $pur->status ?></td>
-                            <td><a href="<?php echo site_url('main/print_purchase_order/' . $pur->purchase_order_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a></td>
+                            <td><?= $sales->reference_no ?></td>
+                            <td><?= $sales->date_created ?></td>
+                            <td><?= ucfirst($sales->customer_name) ?></td>
+                            <td>₱<?= $sales->total_cost ?></td>
+                            <td>
+                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
@@ -104,42 +98,9 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Goods Return Report -->
+        <!-- Inventory Adjustment Report -->
         <div class="tab-pane fade" id="module3">
             <table class="table" id="user-datatables-module3">
-                <thead>
-                    <tr>
-                        <th>Goods Return No.</th>
-                        <th>Supplier</th>
-                        <th>Date Returned</th>
-                        <th>Total Cost</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($gr1 as $grt) { ?>
-                        <tr>
-                            <td><?= $grt->goods_return_no ?></td>
-                            <td><?= $grt->supplier_name ?></td>
-                            <td><?= $grt->date_returned ?></td>
-                            <td>₱<?= $grt->grt_total_cost ?></td>
-                            <td>
-                                <span class="badge bg-success"><?= ucfirst($grt->status) ?></span>
-                            </td>
-                            <td>
-                                <a href="<?php echo site_url('main/print_goods_return/' . $grt->goods_return_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Inventory Adjustment Report -->
-        <div class="tab-pane fade" id="module4">
-            <table class="table" id="user-datatables-module4">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -164,33 +125,5 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Sales Report -->
-        <div class="tab-pane fade" id="module5">
-            <table class="table" id="user-datatables-module5">
-                <thead>
-                    <tr>
-                        <th>Reference No.</th>
-                        <th>Date Created</th>
-                        <th>Payment Method</th>
-                        <th>Total Cost</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($sa as $sales) { ?>
-                        <tr>
-                            <td><?= $sales->reference_no ?></td>
-                            <td><?= $sales->date_created ?></td>
-                            <td><?= ucfirst($sales->payment_method) ?></td>
-                            <td>₱<?= $sales->total_cost ?></td>
-                            <td>
-                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div> <!-- Add more modules as needed -->
     </div>
 </div>

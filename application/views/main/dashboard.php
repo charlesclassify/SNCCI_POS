@@ -11,6 +11,7 @@
         background-color: #699E3C;
         border: none;
         color: #ffffff;
+        font-weight: bolder;
     }
 
     .card-body {

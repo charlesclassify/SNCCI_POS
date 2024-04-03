@@ -1,10 +1,79 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-date_default_timezone_set('Asia/Manila');
 class Main extends CI_Controller
 {
 
-	function index()
+	public function __construct()
+	{
+		parent::__construct();
+		date_default_timezone_set('Asia/Manila');
+		// Exclude the index and login_submit methods from session check
+		if ($this->router->fetch_method() != 'index' && $this->router->fetch_method() != 'login_submit') {
+			$this->check_session(); // Call the session check method
+		}
+	}
+
+	// Method to check session
+	private function check_session()
+	{
+		// Check if the 'UserLoginSession' session data exists
+		if (!$this->session->userdata('UserLoginSession')) {
+			// If session data doesn't exist, redirect to login page
+			redirect(base_url('main'));
+		}
+	}
+
+	public function index()
+	{
+		// If user is already logged in, redirect to dashboard
+		if ($this->session->userdata('UserLoginSession')) {
+			redirect(base_url('main/dashboard'));
+		} else {
+			// Load the login page
+			$this->load->view('main/login');
+		}
+	}
+
+	function login_submit()
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->form_validation->set_rules('username', 'Username', 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+
+			if ($this->form_validation->run() == TRUE) {
+				$username = $this->input->post('username');
+				$password = $this->input->post('password');
+
+				$this->load->model('user_model');
+				$user = $this->user_model->checkPassword($password, $username);
+				if ($user) {
+					$session_data = array(
+						'username' => $user->username,
+						'role' => $user->role,
+					);
+
+					$this->session->set_userdata('UserLoginSession', $session_data);
+
+					redirect(base_url('main/dashboard'));
+				} else {
+					$this->session->set_flashdata('error', 'Username or Password is Wrong');
+					redirect(base_url('main/'));
+				}
+			} else {
+				$this->session->set_flashdata('error', 'Fill all the required fields');
+				redirect(base_url('main/'));
+			}
+		}
+	}
+
+	function logout()
+	{
+		// Destroy session and redirect to login page
+		$this->session->sess_destroy();
+		redirect(base_url('main'));
+	}
+
+	function dashboard()
 	{
 		$this->load->model('product_model');
 		$this->load->model('purchase_order_model');
