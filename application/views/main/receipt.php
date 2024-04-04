@@ -9,187 +9,148 @@
     }
 
     .container {
-        background: #f9f9f9;
-        border: 1px solid #ccc;
-        padding: 20px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        max-width: 300px;
-        margin: 50px auto 0;
-        font-family: 'Source Sans Pro', sans-serif;
-        position: relative;
-        /* Added position relative */
+        display: block;
+        width: 280px;
+        /* Adjusted width for receipt-like appearance */
+        background: #fff;
+        padding: 10px;
+        margin: 0 auto;
+        border: 1px solid #000;
+        /* Adding border for receipt effect */
+        margin-top: 50px;
     }
 
     .receipt_header {
         text-align: center;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 
     .receipt_header h1 {
-        font-size: 24px;
-        margin-bottom: 5px;
-        color: #333;
+        font-size: 16px;
+        margin-bottom: 3px;
+        color: #000;
         text-transform: uppercase;
     }
 
+    .receipt_header h3 {
+        font-size: 10px;
+        color: #727070;
+        font-weight: 300;
+        margin-bottom: 5px;
+    }
+
     .receipt_header h2 {
-        font-size: 14px;
-        color: #777;
+        font-size: 10px;
+        color: #727070;
         font-weight: 300;
     }
 
     .receipt_body {
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
     }
 
     th,
     td {
         border: none;
-        padding: 8px;
-        text-align: left;
+        /* Remove border for a cleaner look */
+        padding: 3px 0;
+        /* Adjusted padding for a more compact layout */
+        font-size: 10px;
+        /* Reduced font size for better fit */
+    }
+
+    .items th,
+    .items td {
+        padding: 3px 0;
+        /* Adjusted padding for a more compact layout */
+    }
+
+    .customer_cont {
+        font-size: 10px;
+        /* Reduced font size for better fit */
+        margin-top: 5px;
     }
 
     .recepit_cont,
-    .customer_cont {
-        display: flex;
-        justify-content: space-between;
-        font-weight: bold;
-        font-size: 14px;
-        color: #333;
-        margin-top: 10px;
+    .change_cont {
+        font-size: 10px;
+        /* Reduced font size for better fit */
+        margin-top: 5px;
     }
 
     h3 {
-        color: #333;
-        border-top: 1px dashed #333;
-        padding-top: 10px;
-        margin-top: 15px;
+        color: #000;
+        border-top: 1px dashed #000;
+        padding-top: 5px;
+        margin-top: 8px;
         text-align: center;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: 8px;
+        /* Reduced font size for better fit */
     }
 
     .print-button {
-        color: #333;
-        display: block;
+        color: #000;
+        display: none;
         text-align: center;
-        margin-top: 15px;
-        font-size: 16px;
-        cursor: pointer;
+        /* Hide print button in print view */
+    }
+
+    /* Hide sidebar and navbar in print view */
+    @media print {
+
+        .navbar,
+        #layoutSidenav_nav {
+            display: none;
+        }
     }
 
     @media print {
-        body * {
-            visibility: hidden;
-        }
-
-        .container,
-        .container * {
-            visibility: visible;
-        }
-
-        /* Adjustments for printing */
         .container {
-            max-width: 300px;
-            /* Set the max-width for the receipt */
+            border: none;
+            /* Remove border in print view */
             width: 100%;
-            /* Make sure the receipt occupies the full width of the printed page */
-            margin: 0 auto;
-            /* Center the receipt on the printed page */
-            padding: 10px;
-            /* Add some padding */
-            border: 1px solid #333;
-            /* Add a border for a bordered appearance */
-            box-shadow: none;
-            /* Remove the box shadow */
-            position: static;
-            /* Set position to static */
+            /* Use full width in print view */
+            max-width: none;
+            /* Remove max-width in print view */
+            padding: 5px;
+            /* Adjusted padding for print view */
+            margin: 0;
         }
 
         .receipt_header h1 {
-            font-size: 20px;
-            /* Decrease the font size of the header */
-            margin-bottom: 3px;
-            /* Adjust the margin */
+            font-size: 14px;
+            /* Adjusted font size for print view */
         }
 
+        .receipt_header h3,
         .receipt_header h2 {
-            font-size: 12px;
-            /* Decrease the font size of the sub-header */
-            margin-bottom: 10px;
-            /* Adjust the margin */
+            font-size: 8px;
+            /* Adjusted font size for print view */
         }
 
-        .receipt_body {
-            margin-top: 5px;
-            /* Adjust the margin */
+        .items th,
+        .items td {
+            font-size: 8px;
+            /* Adjusted font size for print view */
         }
 
-        table {
-            margin-top: 5px;
-            /* Adjust the margin */
-        }
-
-        th,
-        td {
-            padding: 5px;
-            /* Adjust the padding */
-        }
-
+        .customer_cont,
         .recepit_cont,
-        .customer_cont {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 12px;
-            /* Decrease the font size */
-        }
-
-        .recepit_cont div,
-        .customer_cont div {
-            flex-basis: 48%;
-            /* Adjust the width */
+        .change_cont {
+            font-size: 8px;
+            /* Adjusted font size for print view */
         }
 
         h3 {
-            margin-top: 10px;
-            /* Adjust the margin */
-            font-size: 10px;
-            /* Decrease the font size */
+            font-size: 7px;
+            /* Adjusted font size for print view */
         }
-
-        .print-button {
-            display: none;
-            /* Hide the print button when printing */
-        }
-    }
-
-    /* Additional CSS for displaying customer name on the same line */
-    .customer_cont {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        align-items: baseline;
-        /* Align items to the baseline */
-    }
-
-    .customer_cont div {
-        flex-basis: 30%;
-        /* Adjust the width as needed */
-    }
-
-    .customer_cont #customer {
-        flex-basis: 70%;
-        /* Adjust the width as needed */
-        font-weight: bold;
-        text-align: right;
-        /* Align the text to the right */
     }
 </style>
 
