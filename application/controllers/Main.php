@@ -103,6 +103,9 @@ class Main extends CI_Controller
 
 	function add_user()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->add_user_submit();
 		$this->load->view('main/header');
 		$this->load->view('main/add_user');
@@ -110,6 +113,9 @@ class Main extends CI_Controller
 	}
 	function add_user_submit()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('username', 'username', 'trim|required|is_unique[user.username]', array('is_unique' => 'The username is already taken.'));
 			$this->form_validation->set_rules('first_name', 'first_name', 'trim|required');
@@ -135,6 +141,9 @@ class Main extends CI_Controller
 
 	function edit_user($user_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->edit_user_submit();
 		$this->load->model('user_model');
 		$this->data['user'] = $this->user_model->get_users($user_id);
@@ -147,6 +156,9 @@ class Main extends CI_Controller
 	}
 	function edit_user_submit()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('username', 'Username', 'trim|required');
 			$this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
@@ -174,7 +186,9 @@ class Main extends CI_Controller
 	}
 	function deactivate_user($user_id)
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('user_model');
 
 		$response = $this->user_model->deactivate_user($user_id);
@@ -191,7 +205,9 @@ class Main extends CI_Controller
 
 	function reactivate_user($user_id)
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('user_model');
 
 		$response = $this->user_model->reactivate_user($user_id);
@@ -217,6 +233,9 @@ class Main extends CI_Controller
 	}
 	function add_supplier()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->add_supplier_submit();
 		$this->load->view('main/header');
 		$this->load->view('main/add_supplier');
@@ -226,7 +245,9 @@ class Main extends CI_Controller
 
 	function add_supplier_submit()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('supplier_name', 'Supplier', 'trim|is_unique[suppliers.supplier_name]');
 			$this->form_validation->set_rules('company_name', 'Company', 'trim|is_unique[suppliers.company_name]');
@@ -263,6 +284,9 @@ class Main extends CI_Controller
 
 	function editsupplier($supplier_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->edit_supplier_submit();
 		$this->load->model('supplier_model');
 		$this->data['supplier'] = $this->supplier_model->get_supplier($supplier_id);
@@ -274,7 +298,9 @@ class Main extends CI_Controller
 
 	function edit_supplier_submit()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('supplier_name', 'Supplier Name', 'trim');
 			$this->form_validation->set_rules('company_name', 'Company Name', 'trim');
@@ -302,7 +328,9 @@ class Main extends CI_Controller
 
 	function deactivate_supplier($supplier_id)
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('supplier_model');
 
 		$response = $this->supplier_model->deactivate_supplier($supplier_id);
@@ -319,7 +347,9 @@ class Main extends CI_Controller
 
 	function reactivate_supplier($supplier_id)
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('supplier_model');
 
 		$response = $this->supplier_model->reactivate_supplier($supplier_id);
@@ -335,7 +365,7 @@ class Main extends CI_Controller
 	}
 
 
-	function purchase_order()
+	/*function purchase_order()
 	{
 		$this->load->model('purchase_order_model');
 		$this->data['po'] = $this->purchase_order_model->get_all_po();
@@ -344,10 +374,10 @@ class Main extends CI_Controller
 		$this->load->view('main/header');
 		$this->load->view('main/purchase_order', $this->data);
 		$this->load->view('main/footer');
-	}
+	}*/
 
 
-	function add_purchase_order()
+	/*function add_purchase_order()
 	{
 		$this->add_purchase_order_submit();
 		$this->load->model('product_model');
@@ -557,7 +587,7 @@ class Main extends CI_Controller
 		$this->data['select'] = $this->goods_received_model->Select_one($id);
 		$this->data['view'] = $this->goods_received_model->view_all_GR($id);;
 		$this->load->view('main/print_gr_report', $this->data);
-	}
+	}*/
 
 	public function print_receiving($id)
 	{
@@ -567,7 +597,7 @@ class Main extends CI_Controller
 		$this->data['view'] = $this->goods_received_model->view_all_GR($id);;
 		$this->load->view('main/print_gr_report', $this->data);
 	}
-	function goods_return()
+	/*function goods_return()
 	{
 		$this->load->model('goods_return_model');
 		$this->data['grt'] = $this->goods_return_model->get_all_grt();
@@ -632,7 +662,7 @@ class Main extends CI_Controller
 		$this->data['select'] = $this->goods_return_model->Select_one($id);
 		$this->data['view'] = $this->goods_return_model->view_all_grt1($id);
 		$this->load->view('main/print_grt_report', $this->data);
-	}
+	} */
 
 
 	function product()
@@ -646,6 +676,9 @@ class Main extends CI_Controller
 
 	function add_product()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->add_product_submit();
 		$this->load->model('supplier_model');
 		$this->data['suppliers'] = $this->supplier_model->get_all_suppliers();
@@ -657,6 +690,9 @@ class Main extends CI_Controller
 	}
 	function add_product_submit()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('product_code', 'Product Code', 'trim|required|is_unique[product.product_code]');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|required|is_unique[product.product_name]', array('is_unique' => 'The Product Name is already taken.'));
@@ -692,6 +728,9 @@ class Main extends CI_Controller
 
 	function edit_product($product_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->edit_product_submit($product_id);
 		$this->load->model('product_model');
 		$this->data['product'] = $this->product_model->get_product($product_id);
@@ -707,6 +746,9 @@ class Main extends CI_Controller
 
 	function edit_product_submit($product_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('product_code', 'Product Code', 'trim|required');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|required');
@@ -741,6 +783,9 @@ class Main extends CI_Controller
 	}
 	function delete_product($product_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('product_model');
 		$response = $this->product_model->delete_product($product_id);
 
@@ -755,7 +800,7 @@ class Main extends CI_Controller
 		redirect('main/product');
 	}
 
-	function product_category()
+	/*function product_category()
 	{
 		$this->load->model('product_model');
 		$this->data['procat'] = $this->product_model->get_all_product_category();
@@ -839,7 +884,7 @@ class Main extends CI_Controller
 		}
 
 		redirect('main/product_category/');
-	}
+	}*/
 
 
 	function view_product($product_id)
@@ -855,6 +900,9 @@ class Main extends CI_Controller
 
 	function inventory_adjustment()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('product_model');
 
 		$this->data['product'] = $this->product_model->get_all_product();
@@ -864,6 +912,9 @@ class Main extends CI_Controller
 	}
 	function add_stock($product_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->add_stock_submit();
 		$this->load->model('product_model');
 		$this->data['product'] = $this->product_model->get_product($product_id);
@@ -874,7 +925,9 @@ class Main extends CI_Controller
 
 	function add_stock_submit()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('product_quantity', 'Quantity', 'trim|required');
 
@@ -911,7 +964,7 @@ class Main extends CI_Controller
 		$this->load->view('main/inventory_ledger', $this->data);
 		$this->load->view('main/footer');
 	}
-	function stock_requisition()
+	/*function stock_requisition()
 	{
 		$this->add_purchase_order_submit();
 		$this->load->model('stock_requisition_model');
@@ -1085,7 +1138,8 @@ class Main extends CI_Controller
 		}
 
 		redirect('main/stock_requisition/');
-	}
+	}*/
+
 	function reports()
 	{
 		$this->load->model('purchase_order_model');
@@ -1105,12 +1159,18 @@ class Main extends CI_Controller
 	}
 	function backup()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->view('main/header');
 		$this->load->view('main/backup');
 		$this->load->view('main/footer');
 	}
 	public function export()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		//load helpers
 		$this->load->helper('url');
 		$this->load->helper('file');
@@ -1132,7 +1192,9 @@ class Main extends CI_Controller
 	}
 	public function import()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($this->input->post('btn_import')) {
 			$config['upload_path'] = './upload/database/';
 			$config['allowed_types'] = '*';
@@ -1154,7 +1216,9 @@ class Main extends CI_Controller
 
 	public function import2()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$host = 'localhost'; //DB Hosting Name
 		$UN = 'root'; //Db Username
 		$pwd = ''; // Db Password
@@ -1175,6 +1239,9 @@ class Main extends CI_Controller
 
 	function payment()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		$this->add_payment_submit();
 		$this->load->model('sales_model');
 		$this->data['ref_no'] = $this->sales_model->generate_reference_number();
@@ -1184,6 +1251,9 @@ class Main extends CI_Controller
 	}
 	function add_payment_submit()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		if ($this->input->post('btn_add_sales')) {
 			$this->load->model('sales_model');
 			$response = $this->sales_model->insert_sales();
@@ -1207,12 +1277,18 @@ class Main extends CI_Controller
 
 	function receipt()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		$this->load->view('main/header');
 		$this->load->view('main/receipt');
 		$this->load->view('main/footer');
 	}
 	function pos()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('product_model');
 		$this->data['result'] = $this->product_model->get_all_product();
 		$this->load->view('main/header');
@@ -1220,9 +1296,7 @@ class Main extends CI_Controller
 		$this->load->view('main/footer');
 	}
 
-
-
-	function displayrec()
+	/*function displayrec()
 	{
 		$this->load->view('main/header');
 		$this->load->view('main/displayrec');
@@ -1409,19 +1483,22 @@ class Main extends CI_Controller
 		$this->data['code'] = $this->back_order_model->code($id);
 		$this->data['view'] = $this->back_order_model->view_all_bo($id);;
 		$this->load->view('main/print_back_order', $this->data);
-	}
+	} */
 
 
 
 	function print_sales_report($id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('sales_model');
 		$this->data['code'] = $this->sales_model->code($id);
 		$this->data['view'] = $this->sales_model->view_all_sales($id);
 		$this->load->view('main/print_sales_report', $this->data);
 	}
 
-	function sales()
+	/*function sales()
 	{
 		$this->load->model('product_model');
 		$this->data['result'] = $this->product_model->get_all_product();
@@ -1459,11 +1536,14 @@ class Main extends CI_Controller
 				redirect('main/sales');
 			}
 		}
-	}
+	} */
 
 
 	function unit()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('unit_model');
 		$this->data['unit'] = $this->unit_model->get_all_unit();
 		$this->load->view('main/header');
@@ -1473,7 +1553,12 @@ class Main extends CI_Controller
 
 	function add_unit()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
+		if ($_SESSION['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->add_unit_submit();
 		$this->load->view('main/header');
 		$this->load->view('main/add_unit');
@@ -1481,7 +1566,9 @@ class Main extends CI_Controller
 	}
 	function add_unit_submit()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('unit', 'Product Unit', 'trim|required|is_unique[unit.unit]');
 
@@ -1502,6 +1589,9 @@ class Main extends CI_Controller
 
 	function edit_unit($unit_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->edit_unit_submit();
 		$this->load->model('unit_model');
 		$this->data['unit'] = $this->unit_model->get_unit($unit_id);
@@ -1512,7 +1602,9 @@ class Main extends CI_Controller
 
 	function edit_unit_submit()
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('unit', 'Product Unit', 'trim|required');
 
@@ -1535,7 +1627,9 @@ class Main extends CI_Controller
 	}
 	public function delete_unit($id)
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('unit_model');
 		$response = $this->unit_model->delete_unit($id);
 
@@ -1552,6 +1646,9 @@ class Main extends CI_Controller
 
 	function receive_quantity($product_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		$this->receive_quantity_submit();
 		$this->load->model('product_model');
 		$this->data['product'] = $this->product_model->get_product($product_id);
@@ -1561,6 +1658,9 @@ class Main extends CI_Controller
 
 	function receive_quantity_submit()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('product_quantity', 'Product Quantity', 'trim|required');
 			$this->form_validation->set_rules('comments', 'Comments', 'trim|required');
@@ -1615,6 +1715,9 @@ class Main extends CI_Controller
 
 	function inbound_receipt($receiving_no)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('goods_received_model');
 		// Fetch receipt details based on receiving_no
 		$receipt_details = $this->goods_received_model->get_receipt_details($receiving_no);

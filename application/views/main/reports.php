@@ -24,11 +24,15 @@
     <ul class="nav nav-tabs" id="moduleTabs">
         <li class="nav-item">
 
-            <a class="nav-link active" data-toggle="tab" href="#module2">Receiving Report</a>
+            <a class="nav-link active" data-toggle="tab" href="#module1">Receiving Report</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module4">Inventory Report</a>
+            <a class="nav-link" data-toggle="tab" href="#module2">Inventory Report</a>
+
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#module3">Sales Report</a>
 
         </li>
         <!-- Add more modules as needed -->
@@ -39,35 +43,10 @@
 
     <div class="tab-content" id="moduleTabContent">
         <!-- Module 1 Content -->
-        <div class="tab-pane fade show active" id="module1">
-            <table class="table" id="user-datatables-module1">
-                <thead>
-                    <tr>
-                        <th>Reference No.</th>
-                        <th>Date Created</th>
-                        <th>Customer</th>
-                        <th>Total Cost</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($sa as $sales) { ?>
-                        <tr>
-                            <td><?= $sales->reference_no ?></td>
-                            <td><?= $sales->date_created ?></td>
-                            <td><?= ucfirst($sales->customer_name) ?></td>
-                            <td>₱<?= $sales->total_cost ?></td>
-                            <td>
-                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
+
 
         <!-- Receiving Report -->
-        <div class="tab-pane fade show active" id="module2">
+        <div class="tab-pane fade show active" id="module1">
             <table class="table" id="user-datatables-module2">
                 <thead>
                     <tr>
@@ -99,7 +78,7 @@
         </div>
 
         <!-- Inventory Adjustment Report -->
-        <div class="tab-pane fade" id="module3">
+        <div class="tab-pane fade active" id="module2">
             <table class="table" id="user-datatables-module3">
 
                 <thead>
@@ -121,6 +100,32 @@
                             <td><?= $inv->new_quantity ?></td>
                             <td><?= $inv->date_adjusted ?></td>
                             <td><?= $inv->reason ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade active" id="module3">
+            <table class="table" id="user-datatables-module1">
+                <thead>
+                    <tr>
+                        <th>Reference No.</th>
+                        <th>Date Created</th>
+                        <th>Customer</th>
+                        <th>Total Cost</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($sa as $sales) { ?>
+                        <tr>
+                            <td><?= $sales->reference_no ?></td>
+                            <td><?= $sales->date_created ?></td>
+                            <td><?= ucfirst($sales->customer_name) ?></td>
+                            <td>₱<?= $sales->total_cost ?></td>
+                            <td>
+                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>

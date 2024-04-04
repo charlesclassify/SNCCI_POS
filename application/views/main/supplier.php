@@ -1,8 +1,10 @@
 <h4>Supplier Management</h4>
 <div class="card card-outline card-success" style="max-width:100%; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-    <div class="card-header  ">
-        <a href="<?php echo site_url('main/add_supplier'); ?>" class="btn btn-success btn-sm "><i class="fas fa-truck"></i> Add Supplier </a>
-    </div>
+    <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+        <div class="card-header  ">
+            <a href="<?php echo site_url('main/add_supplier'); ?>" class="btn btn-success btn-sm "><i class="fas fa-truck"></i> Add Supplier </a>
+        </div>
+    <?php endif; ?>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered table-stripped table-sm" id="user-datatables">
@@ -14,7 +16,9 @@
                         <th>Contact</th>
                         <th>Email</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+                            <th>Action</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,22 +45,24 @@
                                 <?php
                                 } ?>
                             </td>
-                            <td>
-                                <a href="<?php echo site_url('main/view_supplier/' . $row->supplier_id); ?>" style="color: darkcyan; padding-left:6px;" title="Click here to view supplier details"><i class="fas fa-eye"></i></a>
-                                <a href="<?php echo site_url('main/editsupplier/' . $row->supplier_id); ?>" style="color:gold; padding-left:6px;" title="Click here to edit supplier details"> <i class="fas fa-edit"></i></a>
-                                <?php {
-                                ?>
-                                    <?php $status = $row->status_supplier;
-                                    if ($status == 'active') { ?>
-                                        <a href="<?php echo site_url('main/deactivate_supplier/' . $supplier_id); ?>" style="color:red; padding-left:6px;" title="Click here to deactivate this supplier" onclick="return confirm('Are you sure you want to deactivate supplier?')"><i class="fas fa-ban"></i></a>
-                                    <?php } else { ?>
-                                        <a href="<?php echo site_url('main/reactivate_supplier/' . $supplier_id); ?>" style="color:green; padding-left:6px;" title="Click here to activate this supplier" onclick="return confirm('Are you sure you want to reactivate supplier?')"><i class="fas fa-check-circle"></i></a>
-                                    <?php } ?>
-                                <?php
-                                }
-                                ?>
+                            <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+                                <td>
+                                    <a href="<?php echo site_url('main/view_supplier/' . $row->supplier_id); ?>" style="color: darkcyan; padding-left:6px;" title="Click here to view supplier details"><i class="fas fa-eye"></i></a>
+                                    <a href="<?php echo site_url('main/editsupplier/' . $row->supplier_id); ?>" style="color:gold; padding-left:6px;" title="Click here to edit supplier details"> <i class="fas fa-edit"></i></a>
+                                    <?php {
+                                    ?>
+                                        <?php $status = $row->status_supplier;
+                                        if ($status == 'active') { ?>
+                                            <a href="<?php echo site_url('main/deactivate_supplier/' . $supplier_id); ?>" style="color:red; padding-left:6px;" title="Click here to deactivate this supplier" onclick="return confirm('Are you sure you want to deactivate supplier?')"><i class="fas fa-ban"></i></a>
+                                        <?php } else { ?>
+                                            <a href="<?php echo site_url('main/reactivate_supplier/' . $supplier_id); ?>" style="color:green; padding-left:6px;" title="Click here to activate this supplier" onclick="return confirm('Are you sure you want to reactivate supplier?')"><i class="fas fa-check-circle"></i></a>
+                                        <?php } ?>
+                                    <?php
+                                    }
+                                    ?>
 
-                            </td>
+                                </td>
+                            <?php endif; ?>
                         </tr>
                     <?php } ?>
                 </tbody>
