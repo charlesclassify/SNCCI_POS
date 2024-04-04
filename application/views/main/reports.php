@@ -1,45 +1,25 @@
-<style>
-    /* Adjust tab pane styles for better visibility on dark background */
-    .tab-pane {
-        background-color: #fff;
-        /* Dark background color */
-        color: #000;
-        /* Text color */
-        padding: 20px;
-        /* Add padding for better readability */
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-    }
-
-    /* Optional: Customize active tab styles */
-    .nav-link.active {
-        background-color: #555;
-        /* Active tab background color */
-    }
-</style>
 <div class="container">
     <h4>Report Dashboard</h4>
 
     <!-- Navigation for Modules -->
     <ul class="nav nav-tabs" id="moduleTabs">
         <li class="nav-item">
-
-            <a class="nav-link active" data-toggle="tab" href="#module2">Receiving Report</a>
+            <a class="nav-link active" data-bs-toggle="tab" href="#module1" role="tab" aria-controls="module1" aria-selected="true">Sales Report</a>
         </li>
-
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#module4">Inventory Report</a>
-
+            <a class="nav-link" data-bs-toggle="tab" href="#module2" role="tab" aria-controls="module2" aria-selected="false">Receiving Report</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#module3" role="tab" aria-controls="module3" aria-selected="false">Inventory Report</a>
         </li>
         <!-- Add more modules as needed -->
     </ul>
-
 
     <!-- Purchase Order Report -->
 
     <div class="tab-content" id="moduleTabContent">
         <!-- Module 1 Content -->
-        <div class="tab-pane fade show active" id="module1">
+        <div class="tab-pane fade show active" id="module1" role="tabpanel" aria-labelledby="module1-tab">
             <table class="table" id="user-datatables-module1">
                 <thead>
                     <tr>
@@ -67,7 +47,7 @@
         </div>
 
         <!-- Receiving Report -->
-        <div class="tab-pane fade show active" id="module2">
+        <div class="tab-pane fade active" id="module2" role="tabpanel" aria-labelledby="module2-tab">
             <table class="table" id="user-datatables-module2">
                 <thead>
                     <tr>
@@ -99,7 +79,7 @@
         </div>
 
         <!-- Inventory Adjustment Report -->
-        <div class="tab-pane fade" id="module3">
+        <div class="tab-pane fade active" id="module3" role="tabpanel" aria-labelledby="module3-tab">
             <table class="table" id="user-datatables-module3">
 
                 <thead>

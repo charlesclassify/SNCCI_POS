@@ -126,7 +126,7 @@
                             </thead>
                             <tbody id="product-list-body" class="text-center">
                                 <?php foreach ($result as $product) { ?>
-                                    <tr class="product-row" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>">
+                                    <tr class="product-row" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>" data-product-code="<?php echo $product->product_code; ?>">
                                         <td><?php echo $product->product_name; ?></td>
                                         <td>₱<?php echo $product->product_price; ?></td>
                                         <td><button class="btn btn-success add-to-cart">Add to Cart</button></td>
@@ -205,11 +205,11 @@
                 var endIndex = startIndex + productsPerPage;
                 var filteredProducts = productsData;
 
-                // Filter products based on search term
+                // Filter products based on search term (product name or product code)
                 var searchTerm = $('#product-search').val().toLowerCase().trim();
                 if (searchTerm !== '') {
                     filteredProducts = productsData.filter(function(product) {
-                        return product.product_name.toLowerCase().includes(searchTerm);
+                        return product.product_name.toLowerCase().includes(searchTerm) || product.product_code.toLowerCase().includes(searchTerm);
                     });
                 }
 
@@ -218,9 +218,9 @@
 
                 $('#product-list-body').empty();
                 productsToDisplay.forEach(function(product) {
-                    var productRow = '<tr class="product-row" data-product-name="' + product.product_name + '" data-product-price="' + product.product_price + '">';
+                    var productRow = '<tr class="product-row" data-product-name="' + product.product_name + '" data-product-price="' + product.product_price + '" data-product-code="' + product.product_code + '">';
                     productRow += '<td>' + product.product_name + '</td>';
-                    productRow += '<td>' + '₱' + product.product_price + '</td>';
+                    productRow += '<td>₱' + product.product_price + '</td>';
                     productRow += '<td><button class="btn btn-success add-to-cart">Add to Cart</button></td>';
                     productRow += '</tr>';
                     $('#product-list-body').append(productRow);
