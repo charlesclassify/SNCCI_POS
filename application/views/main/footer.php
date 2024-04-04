@@ -11,7 +11,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <!-- Your custom scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -23,32 +22,31 @@
       "lengthMenu": [10, 25, 50, 75, 100]
     });
 
-    // Initialize DataTable for Module 1
-    $('#user-datatables-module1').DataTable({
-      "lengthMenu": [5, 10, 25, 50, 75, 100]
-    });
     $(document).ready(function() {
-
-      var table = $('#user-datatables-module2').DataTable({
+      // Initialize DataTable for Module 1
+      $('#user-datatables-module1').DataTable({
+        "paging": true,
+        "searching": true,
+        "ordering": true,
         "lengthMenu": [5, 10, 25, 50, 75, 100]
       });
-      var totalPages = table.page.info().pages;
-      table.page(totalPages - 1).draw('page');
-    });
-    // Initialize DataTable for Module 3
-    $('#user-datatables-module3').DataTable({
-      "lengthMenu": [5, 10, 25, 50, 75, 100]
-    });
 
-    // Initialize DataTable for Module 4
-    $('#user-datatables-module4').DataTable({
-      "lengthMenu": [5, 10, 25, 50, 75, 100]
-    });
-    // Initialize DataTable for Module 4
-    $('#user-datatables-module5').DataTable({
-      "lengthMenu": [5, 10, 25, 50, 75, 100]
-    });
+      // Initialize DataTable for Module 2
+      $('#user-datatables-module2').DataTable({
+        "paging": true,
+        "searching": true,
+        "ordering": true,
+        "lengthMenu": [5, 10, 25, 50, 75, 100]
+      });
 
+      // Initialize DataTable for Module 3
+      $('#user-datatables-module3').DataTable({
+        "paging": true,
+        "searching": true,
+        "ordering": true,
+        "lengthMenu": [5, 10, 25, 50, 75, 100]
+      });
+    });
     // Additional DataTable configurations
     $('#ledger-table').DataTable({
       paging: true,

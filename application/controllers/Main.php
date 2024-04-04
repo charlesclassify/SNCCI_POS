@@ -1495,7 +1495,9 @@ class Main extends CI_Controller
 		$this->load->model('sales_model');
 		$this->data['code'] = $this->sales_model->code($id);
 		$this->data['view'] = $this->sales_model->view_all_sales($id);
+		$this->load->view('main/header');
 		$this->load->view('main/print_sales_report', $this->data);
+		$this->load->view('main/footer');
 	}
 
 	/*function sales()

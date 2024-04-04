@@ -1,18 +1,18 @@
 <h4>Inventory Ledger</h4>
 
 <div class="container">
-    <form method="POST" action="" class="form-row">
-        <div class="form-group col-md-4">
-            <label for="date_from" class="text-white">Date From:</label>
-            <input type="date" id="date_from" name="date_from" class="form-control form-control-sm" required>
+    <form method="POST" action="" class="row g-3 align-items-end">
+        <div class="col-md-3">
+            <label for="date_from" class="form-label text-white">Date From:</label>
+            <input type="date" id="date_from" name="date_from" class="form-control" required>
         </div>
-        <div class="form-group col-md-4">
-            <label for="date_to" class="text-white">Date To:</label>
-            <input type="date" id="date_to" name="date_to" class="form-control form-control-sm" required>
+        <div class="col-md-3">
+            <label for="date_to" class="form-label text-white">Date To:</label>
+            <input type="date" id="date_to" name="date_to" class="form-control" required>
         </div>
-        <div class="form-group col-md-4">
+        <div class="col-md-5">
             <label>&nbsp;</label>
-            <button type="submit" class="btn btn-success btn-block btn-sm">Search</button>
+            <button type="submit" class="btn btn-success">Search</button>
         </div>
     </form>
 
@@ -27,52 +27,57 @@
             <hr>
             <div class="card">
                 <div class="card-body">
-                    <table id="ledger-table" class="table table-bordered table-striped table-sm">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Date Posted</th>
-                                <th>Product Name</th>
-                                <th>Quantity</th>
-                                <th>Unit</th>
-                                <th>Price</th>
-                                <th>Activity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($ledger as $row) : ?>
+                    <div class="table-responsive">
+                        <table id="ledger-table" class="table table-bordered table-striped">
+                            <thead>
                                 <tr class="text-center">
-                                    <td><?= $row->date_posted ?></td>
-                                    <td><?= $row->product_name ?></td>
-                                    <td><?= $row->quantity ?></td>
-                                    <td><?= $row->unit ?></td>
-                                    <td><?= $row->price ?></td>
-                                    <td>
-                                        <?php
-                                        $activityBadgeClass = '';
-                                        switch ($row->activity) {
-                                            case 'Inbound':
-                                                $activityBadgeClass = 'badge bg-success';
-                                                break;
-                                            case 'Outbound':
-                                                $activityBadgeClass = 'badge bg-danger';
-                                                break;
-                                            case 'Sold':
-                                                $activityBadgeClass = 'badge bg-info';
-                                                break;
-                                            case 'Sales Returned':
-                                                $activityBadgeClass = 'badge bg-danger';
-                                                break;
-                                            default:
-                                                $activityBadgeClass = 'badge bg-secondary';
-                                                break;
-                                        }
-                                        ?>
-                                        <span class="<?= $activityBadgeClass ?>"><?= ucfirst($row->activity) ?></span>
-                                    </td>
+                                    <th>Date Posted</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    <th>Activity</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($ledger as $row) : ?>
+                                    <tr class="text-center">
+                                        <td><?= $row->date_posted ?></td>
+                                        <td><?= $row->product_name ?></td>
+                                        <td><?= $row->quantity ?></td>
+                                        <td><?= $row->unit ?></td>
+                                        <td><?= $row->price ?></td>
+                                        <td>
+                                            <?php
+                                            $activityBadgeClass = '';
+                                            switch ($row->activity) {
+                                                case 'Purchase':
+                                                    $activityBadgeClass = 'badge bg-primary';
+                                                    break;
+                                                case 'Received':
+                                                    $activityBadgeClass = 'badge bg-success';
+                                                    break;
+                                                case 'Returned':
+                                                    $activityBadgeClass = 'badge bg-danger';
+                                                    break;
+                                                case 'Sold':
+                                                    $activityBadgeClass = 'badge bg-info';
+                                                    break;
+                                                case 'Sales Returned':
+                                                    $activityBadgeClass = 'badge bg-danger';
+                                                    break;
+                                                default:
+                                                    $activityBadgeClass = 'badge bg-secondary';
+                                                    break;
+                                            }
+                                            ?>
+                                            <span class="<?= $activityBadgeClass ?>"><?= ucfirst($row->activity) ?></span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

@@ -23,20 +23,4 @@
                 Backup</a>
         </div>
     </div>
-
-    <!-- Restore Form -->
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">Restore Database</h3>
-        </div>
-        <div class="card-body">
-            <form action="<?= site_url('main/import'); ?>" method="post" enctype="multipart/form-data" class="needs-validation" novalidate onsubmit="return confirm('Are you sure you want to restore your database?')">
-                <div class="form-group">
-                    <label class="text-dark" for="restore_file">Select Backup File</label>
-                    <input type="file" name="restore_file" class="form-control-file" id="restore_file">
-                </div>
-                <button type="submit" class="btn btn-primary">Restore</button>
-            </form>
-        </div>
-    </div>
 </div>
