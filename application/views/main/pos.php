@@ -120,6 +120,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>Product Name</th>
+                                    <th>UoM</th>
                                     <th>Price</th>
                                     <th>Actions</th>
                                 </tr>
@@ -128,6 +129,7 @@
                                 <?php foreach ($result as $product) { ?>
                                     <tr class="product-row" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>" data-product-code="<?php echo $product->product_code; ?>">
                                         <td><?php echo $product->product_name; ?></td>
+                                        <td><?php echo $product->product_uom; ?></td>
                                         <td>₱<?php echo $product->product_price; ?></td>
                                         <td><button class="btn btn-success add-to-cart">Add to Cart</button></td>
                                     </tr>
@@ -220,7 +222,8 @@
                 productsToDisplay.forEach(function(product) {
                     var productRow = '<tr class="product-row" data-product-name="' + product.product_name + '" data-product-price="' + product.product_price + '" data-product-code="' + product.product_code + '">';
                     productRow += '<td>' + product.product_name + '</td>';
-                    productRow += '<td>₱' + product.product_price + '</td>';
+                    productRow += '<td>' + product.product_uom + '</td>';
+                    productRow += '<td>' + '₱' + product.product_price + '</td>';
                     productRow += '<td><button class="btn btn-success add-to-cart">Add to Cart</button></td>';
                     productRow += '</tr>';
                     $('#product-list-body').append(productRow);

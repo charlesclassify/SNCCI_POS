@@ -4,13 +4,17 @@
     <!-- Navigation for Modules -->
     <ul class="nav nav-tabs" id="moduleTabs">
         <li class="nav-item">
+
             <a class="nav-link active" data-bs-toggle="tab" href="#module1" role="tab" aria-controls="module1" aria-selected="true">Sales Report</a>
+
         </li>
         <li class="nav-item">
+
             <a class="nav-link" data-bs-toggle="tab" href="#module2" role="tab" aria-controls="module2" aria-selected="false">Receiving Report</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" href="#module3" role="tab" aria-controls="module3" aria-selected="false">Inventory Report</a>
+
         </li>
         <!-- Add more modules as needed -->
     </ul>
@@ -80,6 +84,7 @@
 
         <!-- Inventory Adjustment Report -->
         <div class="tab-pane fade active" id="module3" role="tabpanel" aria-labelledby="module3-tab">
+
             <table class="table" id="user-datatables-module3">
 
                 <thead>
@@ -101,6 +106,32 @@
                             <td><?= $inv->new_quantity ?></td>
                             <td><?= $inv->date_adjusted ?></td>
                             <td><?= $inv->reason ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade active" id="module3">
+            <table class="table" id="user-datatables-module1">
+                <thead>
+                    <tr>
+                        <th>Reference No.</th>
+                        <th>Date Created</th>
+                        <th>Customer</th>
+                        <th>Total Cost</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($sa as $sales) { ?>
+                        <tr>
+                            <td><?= $sales->reference_no ?></td>
+                            <td><?= $sales->date_created ?></td>
+                            <td><?= ucfirst($sales->customer_name) ?></td>
+                            <td>₱<?= $sales->total_cost ?></td>
+                            <td>
+                                <a href="<?php echo site_url('main/print_sales_report/' . $sales->sales_no_id); ?>" style="color: darkcyan; padding-left:6px;"><i class="fas fa-print"></i></a>
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>
