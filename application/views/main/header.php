@@ -152,31 +152,34 @@
             </a>
             <div class="collapse bg-secondary" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
-                <a class="nav-link text-white" href="<?= base_url('main/inventory_adjustment') ?>">Inventory Adjustment</a>
+                <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+                  <a class="nav-link text-white" href="<?= base_url('main/inventory_adjustment') ?>">Inventory Adjustment</a>
+                <?php endif; ?>
                 <a class="nav-link text-white" href="<?= base_url('main/inventory_ledger') ?>">Inventory Ledger</a>
               </nav>
             </div>
-
-            <a id="nav-link" class="nav-link" href="<?= base_url('main/pos') ?>">
-              <div class="sb-nav-link-icon">
-                <i class="fas fa-cash-register text-dark"></i>
-              </div>
-              POS
-            </a>
+            <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_OUTBOUND_USER || $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+              <a id="nav-link" class="nav-link" href="<?= base_url('main/pos') ?>">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-cash-register text-dark"></i>
+                </div>
+                POS
+              </a>
+            <?php endif; ?>
             <a id="nav-link" class="nav-link" href="<?= base_url('main/reports') ?>">
               <div class="sb-nav-link-icon">
                 <i class="fas fa-chart-bar text-dark"></i>
               </div>
               Reports
             </a>
-
-            <a id="nav-link" class="nav-link" href="<?= base_url('main/backup') ?>">
-              <div class="sb-nav-link-icon">
-                <i class="fas fa-database text-dark"></i>
-              </div>
-              Backup & Restore
-            </a>
-
+            <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+              <a id="nav-link" class="nav-link" href="<?= base_url('main/backup') ?>">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-database text-dark"></i>
+                </div>
+                Backup & Restore
+              </a>
+            <?php endif; ?>
           </div>
         </div>
       </nav>

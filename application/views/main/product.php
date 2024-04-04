@@ -3,20 +3,22 @@
 <div class="col-sm-6">
 
 </div>
-<h1 class="m-0 text-dark">
-  <a href="<?php echo site_url('main/product'); ?>" class="btn btn-primary btn-sm btn-success"><i class="fas fa-boxes"></i> Products</a>
-  <a href="<?php echo site_url('main/unit'); ?>" class="btn btn-primary btn-sm btn-success"><i class="fas fa-barcode"></i> Unit Management</a>
-</h1>
+<?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+  <h1 class="m-0 text-dark">
+    <a href="<?php echo site_url('main/product'); ?>" class="btn btn-primary btn-sm btn-success"><i class="fas fa-boxes"></i> Products</a>
+    <a href="<?php echo site_url('main/unit'); ?>" class="btn btn-primary btn-sm btn-success"><i class="fas fa-barcode"></i> Unit Management</a>
+  </h1>
+<?php endif; ?>
 <div class="card" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col-sm-6">
-
-        <a href="<?php echo site_url('main/add_product'); ?>" class="btn btn-success btn-sm"><i class="fas fa-box"></i> Add Product</a>
-
+  <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-sm-6">
+          <a href="<?php echo site_url('main/add_product'); ?>" class="btn btn-success btn-sm"><i class="fas fa-box"></i> Add Product</a>
+        </div>
       </div>
     </div>
-  </div>
+  <?php endif; ?>
   <div class="card-body">
     <div class="table-responsive">
       <table id="productTable" class="table table-striped table-bordered" style="width:100%">
@@ -51,10 +53,14 @@
                 <td><?php echo $product_quantity; ?></td>
                 <td><?php echo $product_uom; ?></td>
                 <td>
-                  <a href="#" class="addReceivedQuantitiesBtn" data-productid="<?php echo $product_id; ?>" style="color:green; padding-left:6px;" title="Click here to add product quantity" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
+                  <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_INBOUND_USER) : ?>
+                    <a href="#" class="addReceivedQuantitiesBtn" data-productid="<?php echo $product_id; ?>" style="color:green; padding-left:6px;" title="Click here to add product quantity" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
+                  <?php endif; ?>
                   <a href="<?php echo site_url('main/view_product/') . $product_id; ?>" style="color:darkcyan; padding-left:6px;"><i class=" fas fa-eye"></i></a>
-                  <a href="<?php echo site_url('main/edit_product/') . $product_id; ?>" style="color:gold; padding-left:6px;"><i class=" fas fa-edit"></i></a>
-                  <a href="<?php echo site_url('main/delete_product/') . $product_id; ?>" onclick="return confirm('Are you sure you want to delete this product?')" style="color:red; padding-left:6px;"><i class="fas fa-trash"></i></a>
+                  <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+                    <a href="<?php echo site_url('main/edit_product/') . $product_id; ?>" style="color:gold; padding-left:6px;"><i class=" fas fa-edit"></i></a>
+                    <a href="<?php echo site_url('main/delete_product/') . $product_id; ?>" onclick="return confirm('Are you sure you want to delete this product?')" style="color:red; padding-left:6px;"><i class="fas fa-trash"></i></a>
+                  <?php endif; ?>
                 </td>
               </tr>
           <?php

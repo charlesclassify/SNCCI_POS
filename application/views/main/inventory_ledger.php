@@ -50,13 +50,10 @@
                                         <?php
                                         $activityBadgeClass = '';
                                         switch ($row->activity) {
-                                            case 'Purchase':
-                                                $activityBadgeClass = 'badge bg-primary';
-                                                break;
-                                            case 'Received':
+                                            case 'Inbound':
                                                 $activityBadgeClass = 'badge bg-success';
                                                 break;
-                                            case 'Returned':
+                                            case 'Outbound':
                                                 $activityBadgeClass = 'badge bg-danger';
                                                 break;
                                             case 'Sold':

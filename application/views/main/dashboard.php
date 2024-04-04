@@ -23,7 +23,7 @@
 
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card p-4 h-100">
                 <div class="card-header">
                     Sales Summary
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card p-4 h-100">
                 <div class="card-header">
                     Products
@@ -51,21 +51,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card p-4 h-100">
-                <div class="card-header">
-                    Orders
-                </div>
-                <div class="card-body">
-                    <h5>Pending Orders</h5>
-                    <p><?= $pending_po ?></p>
-                    <h5>Completed Orders</h5>
-                    <p><?= $completed_po ?></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card p-4 h-100">
                 <div class="card-header">
                     Inventory
