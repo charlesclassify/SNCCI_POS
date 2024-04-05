@@ -1659,6 +1659,8 @@ class Main extends CI_Controller
 		$this->load->model('product_model');
 		$this->data['product'] = $this->product_model->get_product($product_id);
 		$this->data['rn'] = $this->product_model->receiving_no();
+		$this->load->model('supplier_model');
+		$this->data['suppliers'] = $this->supplier_model->get_all_suppliers();
 		$this->load->view('main/receiving', $this->data);
 	}
 

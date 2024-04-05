@@ -323,6 +323,7 @@ class Product_model extends CI_Model
 		$product_code = $this->input->post('product_code');
 		$product_name = $this->input->post('product_name');
 		$username = $this->input->post('username');
+		$supplier = $this->input->post('supplier');
 		$product_uom = $this->input->post('product_uom');
 		$comments = $this->input->post('comments');
 		$rn = $this->input->post('rn');
@@ -349,6 +350,7 @@ class Product_model extends CI_Model
 				'inbound_quantity' => $product_quantity,
 				'date' => date('Y-m-d H:i:s'),
 				'username' => $username,
+				'supplier' => $supplier,
 				'product_uom' => $product_uom,
 				'comments' => $comments,
 				'product_image' => $image_file_name,

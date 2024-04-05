@@ -28,12 +28,22 @@
 
                         <input type="number" id="product_quantity" name="product_quantity" class="form-control form-control text" placeholder="Enter Quantity" min="1" required>
                     </div>
+                    <div class="form-group col-11 d-inline-block">
+                        <label class="bold-label">Supplier</label>
+                        <select class="form-control form-control " data-live-search="true" data-style="btn-sm btn-outline-secondary" title="Select Supplier" name="supplier" required>
+                            <option value="" selected hidden>Select Supplier</option>
+                            <?php foreach ($suppliers as $supp) { ?>
+                                <option value="<?= $supp->supplier_name ?> - <?= $supp->company_name ?>"><?= $supp->supplier_name ?> - <?= $supp->company_name ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
 
                     <div class="form-group col-md-11 d-inline-block">
                         <label for="product_image" class="bold-label">Upload Image</label>
                         <input type="file" id="product_image" name="product_image" value="<?= set_value('product_image'); ?>" class="form-control <?= form_error('product_image') ? 'is-invalid' : ''; ?>" required>
                         <span style="color: red;"><?= form_error('product_image'); ?></span>
                     </div>
+
 
                     <div class="form-group col-11 d-inline-block">
                         <label for="comments" class="bold-label">Comments</label>
