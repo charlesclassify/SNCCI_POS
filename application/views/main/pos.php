@@ -293,7 +293,7 @@
                 // Create a new cart item element with quantity input
                 var cartItem = $('<tr data-product-name="' + productName + '" data-product-price="' + productPrice.toFixed(2) + '"></tr>');
                 cartItem.append('<td>' + productName + '</td>');
-                cartItem.append('<td><input class="form-control form-control-sm product-quantity" type="number" value="1" min="1"></td>');
+                cartItem.append('<td><input class="form-control form-control-sm product-quantity" type="number" value="1" min="0"></td>');
                 cartItem.append('<td>₱' + productPrice.toFixed(2) + '</td>');
                 cartItem.append('<td class="product-total">' + productPrice.toFixed(2) + '</td>');
                 cartItem.append('<td><button class="btn btn-danger delete-item">Delete</button></td>');

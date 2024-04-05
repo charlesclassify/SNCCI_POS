@@ -41,6 +41,14 @@ class Sales_model extends CI_Model
             $quantity_value = $quantity[$index];
             $product_price_value = $product_price[$index];
 
+            // Check if the requested quantity exceeds the remaining quantity
+            $remaining_quantity = $this->get_remaining_quantity($product_name);
+            if ($quantity_value > $remaining_quantity) {
+                // If quantity exceeds remaining, show toastr error and skip inserting
+                $this->session->set_flashdata('error', 'Quantity exceeds remaining quantity for product: ' . $product_name);
+                redirect('main/pos'); // Redirect to your sales page or wherever appropriate
+            }
+
             $data = [
                 'reference_no' => $last_id,
                 'product_name' => $product_name,
@@ -88,6 +96,17 @@ class Sales_model extends CI_Model
 
         return $last_id;
     }
+
+    function get_remaining_quantity($product_name)
+    {
+        $this->db->select('product_quantity');
+        $this->db->from('product');
+        $this->db->where('product_name', $product_name);
+        $query = $this->db->get();
+        $current_quantity = $query->row()->product_quantity;
+        return $current_quantity;
+    }
+
     function get_all_sales()
     {
         $this->db->select('*');
