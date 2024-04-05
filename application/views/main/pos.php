@@ -127,7 +127,7 @@
                             </thead>
                             <tbody id="product-list-body" class="text-center">
                                 <?php foreach ($result as $product) { ?>
-                                    <tr class="product-row" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>" data-product-code="<?php echo $product->product_code; ?>">
+                                    <tr class="product-row" data-product-name="<?php echo $product->product_name; ?>" data-product-price="<?php echo $product->product_price; ?>" data-product-code="<?php echo $product->product_code; ?>" data-product-barcode="<?php echo $product->product_barcode; ?>">
                                         <td><?php echo $product->product_name; ?></td>
                                         <td><?php echo $product->product_uom; ?></td>
                                         <td>₱<?php echo $product->product_price; ?></td>
@@ -211,7 +211,7 @@
                 var searchTerm = $('#product-search').val().toLowerCase().trim();
                 if (searchTerm !== '') {
                     filteredProducts = productsData.filter(function(product) {
-                        return product.product_name.toLowerCase().includes(searchTerm) || product.product_code.toLowerCase().includes(searchTerm);
+                        return product.product_name.toLowerCase().includes(searchTerm) || product.product_code.toLowerCase().includes(searchTerm) || product.product_barcode.toLowerCase().includes(searchTerm);
                     });
                 }
 
@@ -220,8 +220,8 @@
 
                 $('#product-list-body').empty();
                 productsToDisplay.forEach(function(product) {
-                    var productRow = '<tr class="product-row" data-product-name="' + product.product_name + '" data-product-price="' + product.product_price + '" data-product-code="' + product.product_code + '">';
-                    productRow += '<td>' + product.product_name + '</td>';
+                    var productRow = '<tr class="product-row" data-product-name="' + product.product_name + '" data-product-price="' + product.product_price + '" data-product-code="' + product.product_code + '" data-product-barcode="' + product.product_barcode + '">';
+                    productRow += '<td style="font-size: 12px; font-weight: bold">' + product.product_name + '</td>';
                     productRow += '<td>' + product.product_uom + '</td>';
                     productRow += '<td>' + '₱' + product.product_price + '</td>';
                     productRow += '<td><button class="btn btn-success add-to-cart">Add to Cart</button></td>';
@@ -234,14 +234,28 @@
             }
 
             // Function to update pagination
+            // Function to update pagination
             function updatePagination() {
                 $('#pagination').empty();
-                for (var i = 1; i <= totalPages; i++) {
+
+                var maxPagesToShow = 10; // Maximum number of pages to display at once
+                var startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+                var endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+                for (var i = startPage; i <= endPage; i++) {
                     var liClass = (i === currentPage) ? 'page-item active' : 'page-item';
-                    var pageLink = '<li class="' + liClass + '"><a class="page-link" href="#">' + i + '</a></li>';
+                    var pageLink = '<li class="' + liClass + '"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>';
                     $('#pagination').append(pageLink);
                 }
+
             }
+
+            // Pagination click event
+            $('#pagination').on('click', '.page-link', function(event) {
+                event.preventDefault();
+                currentPage = parseInt($(this).data('page'));
+                displayProducts();
+            });
 
             // Initial display of products and pagination
             displayProducts();
