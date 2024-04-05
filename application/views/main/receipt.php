@@ -78,7 +78,7 @@
 
     .recepit_cont,
     .change_cont {
-        font-size: 10px;
+        font-size: 12px;
         /* Reduced font size for better fit */
         margin-top: 5px;
     }
@@ -90,7 +90,7 @@
         margin-top: 8px;
         text-align: center;
         text-transform: uppercase;
-        font-size: 8px;
+        font-size: 12px;
         /* Reduced font size for better fit */
     }
 
@@ -130,33 +130,38 @@
 
         .receipt_header h3,
         .receipt_header h2 {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         .items th,
         .items td {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         .customer_cont,
         .recepit_cont,
         .change_cont {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         h3 {
-            font-size: 7px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
+    }
+
+    .recepit_cont {
+        text-align: right;
     }
 </style>
 
 <div class="container">
     <div class="receipt_header">
         <h1> GENSAN FEEDMILL, INC.</h1>
+        <h2>WAREHOUSE</h2>
         <h3> Outbound Receipt</h3>
         <h2>Prepared By: <?= ucfirst($this->session->userdata('UserLoginSession')['username']) ?></h2>
     </div>
@@ -165,25 +170,25 @@
             <table>
                 <thead>
                     <th>ITEM NAME</th>
-                    <th>QUANTITY</th>
-                    <th>PRICE</th>
+                    <th>QTY</th>
+                    <th>&nbsp&nbspPRICE</th>
                 </thead>
                 <tbody id="itemTableBody"></tbody>
             </table>
         </div>
     </div>
-    <div class="customer_cont">
-        <div>Customer:</div>
-        <div id="customer"></div>
-    </div>
+    <h3></h3>
     <div class="recepit_cont">
-        <div>Total:</div>
-        <div id="totalAmount"></div>
+        <span>Total:</span>
+        <span id="totalAmount"></span>
     </div>
+    <div class="customer_cont">
+        <span>Customer:</span>
+        <span id="customer"></span>
+    </div>
+
     <h3>Reference No.: <span id="referenceNo"></span> | Date: <?php echo date('m/d/y'); ?></h3>
-    <div class="print-button" id="printButton">
-        <i class="fas fa-print"></i> Print
-    </div>
+
 </div>
 
 <!-- Your JavaScript imports and scripts -->
@@ -200,8 +205,8 @@
         products.forEach(function(product) {
             var row = document.createElement('tr');
             row.innerHTML = '<td>' + product.productName + '</td>' +
-                '<td>' + product.quantity + '</td>' +
-                '<td>' + product.productPrice.toFixed(2) + '</td>';
+                '<td>' + 'x' + product.quantity + '</td>' +
+                '<td>' + '₱' + product.productPrice.toFixed(2) + '</td>';
             itemTableBody.appendChild(row);
 
             // Calculate total amount
