@@ -78,7 +78,7 @@
 
     .recepit_cont,
     .change_cont {
-        font-size: 10px;
+        font-size: 12px;
         /* Reduced font size for better fit */
         margin-top: 5px;
     }
@@ -90,7 +90,7 @@
         margin-top: 8px;
         text-align: center;
         text-transform: uppercase;
-        font-size: 8px;
+        font-size: 12px;
         /* Reduced font size for better fit */
     }
 
@@ -130,27 +130,31 @@
 
         .receipt_header h3,
         .receipt_header h2 {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         .items th,
         .items td {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         .customer_cont,
         .recepit_cont,
         .change_cont {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         h3 {
-            font-size: 7px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
+    }
+
+    .recepit_cont {
+        text-align: right;
     }
 </style>
 
@@ -166,33 +170,31 @@
             <table>
                 <thead>
                     <th>ITEM NAME</th>
-                    <th>QUANTITY</th>
-                    <th>PRICE</th>
+                    <th>QTY</th>
+                    <th>&nbsp&nbspPRICE</th>
                 </thead>
                 <tbody id="itemTableBody">
                     <?php foreach ($view as $row) { ?>
                         <tr>
                             <td><?= $row->product_name; ?></td>
-                            <td><?= $row->quantity; ?></td>
-                            <td><?= $row->product_price; ?></td>
+                            <td>x<?= $row->quantity; ?></td>
+                            <td>₱<?= $row->product_price; ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="customer_cont">
-        <div>Customer:</div>
-        <div id="customer"><?= $code->customer_name ?></div>
-    </div>
+    <h3></h3>
     <div class="recepit_cont">
-        <div>Total:</div>
-        <div id="totalAmount"><?= $code->total_cost ?></div>
+        <span>Total:</span>
+        <span id="totalAmount">₱<?= $code->total_cost ?></span>
+    </div>
+    <div class="customer_cont">
+        <span>Customer:</span>
+        <span id="customer"><?= $code->customer_name ?></span>
     </div>
     <h3>Reference No.: <?= $code->reference_no ?> | Date: <?= $code->date_created ?></h3>
-    <div class="print-button" id="printButton">
-        <i class="fas fa-print"></i> Print
-    </div>
 </div>
 <script>
     // Handle printing

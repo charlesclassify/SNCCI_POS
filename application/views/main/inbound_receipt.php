@@ -16,7 +16,6 @@
         padding: 10px;
         margin: 0 auto;
         border: 1px solid #000;
-        /* Adding border for receipt effect */
         margin-top: 50px;
     }
 
@@ -90,7 +89,7 @@
         margin-top: 8px;
         text-align: center;
         text-transform: uppercase;
-        font-size: 8px;
+        font-size: 12px;
         /* Reduced font size for better fit */
     }
 
@@ -130,71 +129,88 @@
 
         .receipt_header h3,
         .receipt_header h2 {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         .items th,
         .items td {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         .customer_cont,
         .recepit_cont,
         .change_cont {
-            font-size: 8px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
 
         h3 {
-            font-size: 7px;
+            font-size: 12px;
             /* Adjusted font size for print view */
         }
+    }
+
+    .total {
+        text-align: right;
+    }
+
+    .itemTableBody {
+        font-size: 12px;
+    }
+
+    .comment {
+        font-size: 12px;
+    }
+
+    .total {
+        font-size: 12px;
     }
 </style>
 
 
 <div class="container">
     <div class="receipt_header">
-        <h1><strong> GENSAN FEEDMILL, INC.</strong></h1>
+        <h1>GENSAN FEEDMILL, INC.</h1>
         <h2>WAREHOUSE</h2>
+        <h3></h3>
         <h2><strong>INBOUND RECEIPT</strong></h2>
-        <!--h2>Prepared By: </h2-->
+        <h2>Prepared By: <?= ucfirst($this->session->userdata('UserLoginSession')['username']) ?></h2>
     </div>
     <div class="receipt_body">
         <?php foreach ($receipt_details as $receipt) : ?>
-            <div class="side">
-                <h3>Clerk: <?= ucfirst($this->session->userdata('UserLoginSession')['username']) ?></h3>
-                <h3>Description | Quantity | UOM</h3>
-            </div>
-            <div class="items">
-                <div>
-                    <span id="product_code"><?= $receipt->product_code ?></span>
-                    <span id="product_name"><?= $receipt->product_name ?></span>
-                    <span id="product_quantity"><?= $receipt->inbound_quantity ?></span>
-                    <span id="product_quantity">(<?= $receipt->product_uom ?>)</span>
-                </div>
-            </div>
+            <table>
+                <thead>
+                    <th>CODE</th>
+                    <th>NAME</th>
+                    <th>UOM</th>
+                    <th>QTY</th>
+
+                </thead>
+                <tbody id="itemTableBody">
+                    <tr>
+                        <td><?= $receipt->product_code ?></td>
+                        <td><?= $receipt->product_name ?></td>
+                        <td><?= $receipt->product_uom ?></td>
+                        <td>x<?= $receipt->inbound_quantity ?></td>
+
+                    </tr>
+                </tbody>
+            </table>
 
     </div>
-    <h4></h4>
+    <h3></h3>
     <div class="total">
         <div>Total: ₱0.00</div>
         <div id="total"></div>
     </div>
     <div class="comment">
-        <div>Comment: <?= $receipt->comments ?></div>
+        <div>Comments: <?= $receipt->comments ?></div>
         <div id="comment"></div>
     </div>
     <div class="comment">
-
         <h3><?= $receipt->receiving_no ?> | <?= $receipt->date ?></h3>
-
-    </div>
-
-    <div class="print-button" id="printButton">
-        <i class="fas fa-print"></i> Print
     </div>
 <?php endforeach; ?>
 </div>

@@ -1171,71 +1171,78 @@ class Main extends CI_Controller
 		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
 			redirect('main/dashboard');
 		}
-		//load helpers
-		$this->load->helper('url');
+
 		$this->load->helper('file');
 		$this->load->helper('download');
-		$this->load->library('zip');
-		//load database
-		$this->load->dbutil();
-		//create format
-		$db_format = array('format' => '.sql', 'filename' => 'pos.sql');
-		$backup = &$this->dbutil->backup($db_format);
-		// file name
-		$dbname = 'pos.sql';
-		$save = '.assets/db_backup/' . $dbname;
-		// write file
-		write_file($save, $backup);
+		$this->load->library('session');
 
-		// and force download
-		force_download($dbname, $backup);
+		$this->load->dbutil();
+
+		$db_format = array('format' => '.sql', 'filename' => 'pos_backup_' . date('Ymd-his') . '.sql');
+
+		$backup = &$this->dbutil->backup($db_format);
+
+		$dbname = 'pos.sql';
+
+		$save = 'C:/xampp/htdocs/GFI_POS/assets/db_backup/' . $db_format['filename'];
+
+		if (write_file($save, $backup)) {
+			$success_message = 'Database backup created successfully.';
+			$this->session->set_flashdata('success', $success_message);
+		} else {
+			$error_message = 'Failed to create database backup.';
+			$this->session->set_flashdata('error', $error_message);
+		}
+
+		redirect('main/backup');
 	}
-	public function import()
+
+	public function restore()
 	{
 		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
 			redirect('main/dashboard');
 		}
-		if ($this->input->post('btn_import')) {
-			$config['upload_path'] = './upload/database/';
-			$config['allowed_types'] = '*';
-			$config['overwrite'] = TRUE;
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('import')) {
-				$error_message = 'Backup was not restored.';
-				$this->session->set_flashdata('error', $error_message);
-			} else {
-				$this->import2();
-				$success_message = 'Backup was restored successfully.';
-				$this->session->set_flashdata('success', $success_message);
+
+		$this->load->library('session');
+
+		// Check if a file was uploaded
+		if (!empty($_FILES['backupFile']['name'])) {
+			$this->load->database(); // Make sure your database configuration is set correctly
+
+			// Disable foreign key checks
+			$this->db->query('SET foreign_key_checks = 0');
+
+			$this->db->trans_begin(); // Begin transaction
+
+			// Read uploaded SQL file content
+			$sql_content = file_get_contents($_FILES['backupFile']['tmp_name']);
+
+			// Execute SQL queries
+			$queries = explode(';', $sql_content);
+			foreach ($queries as $query) {
+				if (!empty(trim($query))) {
+					$this->db->query($query);
+				}
 			}
 
-			redirect('main/backup_and_restore');
+			// Check if transaction was successful
+			if ($this->db->trans_status() === FALSE) {
+				$this->db->trans_rollback();
+				$this->session->set_flashdata('error', 'Failed to restore database.');
+			} else {
+				$this->db->trans_commit();
+				$this->session->set_flashdata('success', 'Database restored successfully.');
+			}
+
+			// Re-enable foreign key checks
+			$this->db->query('SET foreign_key_checks = 1');
+		} else {
+			$this->session->set_flashdata('error', 'No backup file selected.');
 		}
+
+		redirect('main/backup');
 	}
 
-
-	public function import2()
-	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
-			redirect('main/dashboard');
-		}
-		$host = 'localhost'; //DB Hosting Name
-		$UN = 'root'; //Db Username
-		$pwd = ''; // Db Password
-		$database_name = 'inventory'; // Db Name
-		$db_file = $this->input->post('back');
-		$connection = mysqli_connect($host, $UN, $pwd, $database_name);
-
-		$filename = 'C:/xampp/htdocs/ETPI/upload/database/inventory.sql';
-		$handle = fopen($filename, "r+");
-		$contents = fread($handle, filesize($filename));
-
-		$sql = explode(';', $contents);
-		foreach ($sql as $query) {
-			$result = mysqli_query($connection, $query);
-		}
-		fclose($handle);
-	}
 
 	function payment()
 	{
@@ -1489,9 +1496,6 @@ class Main extends CI_Controller
 
 	function print_sales_report($id)
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
-			redirect('main/dashboard');
-		}
 		$this->load->model('sales_model');
 		$this->data['code'] = $this->sales_model->code($id);
 		$this->data['view'] = $this->sales_model->view_all_sales($id);
