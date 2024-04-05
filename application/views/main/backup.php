@@ -27,7 +27,7 @@
     <!-- Restore Form -->
     <div class="card mb-4">
         <div class="card-header">
-            <h3 class="card-title">Restore Database</h3>
+            <h3 class="card-title">Restore Databases</h3>
         </div>
         <div class="card-body">
             <form action="<?= site_url('main/restore'); ?>" method="post" enctype="multipart/form-data">
