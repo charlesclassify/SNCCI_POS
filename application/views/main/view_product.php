@@ -15,7 +15,7 @@
 <div class="container mt-3">
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h4 class="m-0 text-white">View Product</h4>
+            <h4 class="m-0">View Product</h4>
         </div><!-- /.col -->
     </div><!-- /.row -->
 
@@ -42,12 +42,6 @@
                         <p><?= $product->product_name; ?></p>
                         <?= form_error('product_name'); ?>
                     </div>
-
-                    <div class="form-group col-md-3 d-inline-block">
-                        <label class="bold-label">Preferred Supplier</label>
-                        <p><?= $select->supplier_name; ?> - <?= $select->company_name; ?></p>
-                    </div>
-
 
                     <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Product Brand</label>
@@ -82,8 +76,51 @@
                         <p>₱ <?= number_format($product->product_price, 2); ?></p>
                     </div>
                 </div>
+                <h3 class="mb-0">Product Movement</h3>
+                <br>
+                <br>
 
-
+                <div class="table-responsive">
+                    <table id="ledger-table" class="table table-bordered table-striped">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Date Posted</th>
+                                <th>Product Name</th>
+                                <th>UoM</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Price</th>
+                                <th>Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($ledger as $row) : ?>
+                                <tr class="text-center">
+                                    <td><?= $row->date_posted ?></td>
+                                    <td><?= $row->product_name ?></td>
+                                    <td><?= $product->product_uom ?></td>
+                                    <td><?= $row->quantity ?></td>
+                                    <td><?= $row->unit ?></td>
+                                    <td>₱<?= $row->price ?></td>
+                                    <td>
+                                        <?php
+                                        $activityBadgeClass = '';
+                                        switch ($row->activity) {
+                                            case 'Inbound':
+                                                $activityBadgeClass = 'badge bg-success';
+                                                break;
+                                            case 'Outbound':
+                                                $activityBadgeClass = 'badge bg-danger';
+                                                break;
+                                        }
+                                        ?>
+                                        <span class="<?= $activityBadgeClass ?>"><?= ucfirst($row->activity) ?></span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div>
@@ -95,4 +132,5 @@
             </div>
         </div>
     </div>
+
 </div>

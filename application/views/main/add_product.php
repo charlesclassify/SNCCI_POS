@@ -12,6 +12,10 @@
             margin-left: 0;
         }
     }
+
+    .form-group {
+        margin: 10px;
+    }
 </style>
 
 <div class="container mt-3">
@@ -24,38 +28,26 @@
                 <div class="section">
                     <h5>Product Information</h5>
 
-                    <div class="form-group col-md-2 d-inline-block">
+                    <div class="form-group col-md-3 d-inline-block">
                         <label for="date_created" class="bold-label">Date Created</label>
                         <input type="text" id="date_created" name="date_created" value="<?= date('m-d-Y'); ?>" readonly class="form-control">
                     </div>
-                    <div class="form-group col-md-4 d-inline-block">
+                    <div class="form-group col-md-3 d-inline-block">
                         <label for="product_code" class="bold-label">SAP Code</label>
                         <input type="text" id="product_code" name="product_code" value="SI" class="form-control">
                     </div>
 
-                    <div class="form-group col-md-5 d-inline-block">
+                    <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Product Name</label>
                         <input type="text" placeholder="Enter Product Name" name="product_name" value="<?= set_value('product_name'); ?>" class="form-control" required>
                         <?= form_error('product_name'); ?>
                     </div>
-
-                    <div class="form-group col-md-4 d-inline-block">
+                    <br>
+                    <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Brand</label>
 
                         <input type="text" placeholder="Enter Brand" name="product_brand" value="<?= set_value('product_brand'); ?>" class="form-control" required>
                         <?= form_error('product_brand'); ?>
-                    </div>
-
-                    <div class="form-group col-4 d-inline-block">
-                        <label class="bold-label">Preferred Supplier</label>
-
-                        <select class="form-control form-control " data-live-search="true" data-style="btn-sm btn-outline-secondary" title="Select Supplier" name="supplier_id" required>
-
-                            <option value="" selected hidden>Select Supplier</option>
-                            <?php foreach ($suppliers as $supp) { ?>
-                                <option value="<?= $supp->supplier_id ?>"><?= $supp->supplier_name ?> - <?= $supp->company_name ?></option>
-                            <?php } ?>
-                        </select>
                     </div>
 
                     <div class="form-group col-md-3 d-inline-block">
@@ -75,7 +67,7 @@
                         <input type="text" placeholder="Enter Barcode" name="product_barcode" value="<?= set_value('product_barcode'); ?>" class="form-control" id="product_barcode" required>
                         <?= form_error('product_barcode'); ?>
                     </div>
-                    <div class="form-group col-md-4 d-inline-block">
+                    <div class="form-group col-md-3 d-inline-block">
                         <label class="bold-label">Unit of Measure</label>
                         <select class="form-control form-control" name="product_uom" id="uom" title="Please enter unit" required>
                             <option value="" selected hidden>Select Unit</option>

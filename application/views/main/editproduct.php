@@ -15,6 +15,10 @@
 			margin-left: 0;
 		}
 	}
+
+	.form-group {
+		margin: 10px;
+	}
 </style>
 
 <div class="container mt-3">
@@ -35,38 +39,28 @@
 				<div class="section">
 					<h5>Product Information</h5>
 
-					<div class="form-group col-md-2 d-inline-block">
+					<div class="form-group col-md-3 d-inline-block">
 						<label for="date_created" class="bold-label">Date Updated</label>
 						<input type="text" id="date_created" name="date_created" value="<?= date('m-d-Y'); ?>" readonly class="form-control">
 					</div>
-					<div class="form-group col-md-4 d-inline-block">
+					<div class="form-group col-md-3 d-inline-block">
 						<label for="product_code" class="bold-label">Product Code</label>
 						<input type="text" id="product_code" name="product_code" value="<?= set_value('product_code', $product->product_code); ?>" class="form-control" readonly>
 
 					</div>
-					<div class="form-group col-md-5 d-inline-block">
+					<div class="form-group col-md-3 d-inline-block">
 						<label class="bold-label">Product Name</label>
 						<input type="text" placeholder="Product Name" name="product_name" value="<?= set_value('product_name', $product->product_name); ?>" class="form-control" required>
 						<?= form_error('product_name'); ?>
 						<?php $productname = $product->product_name; ?>
 					</div>
 
-					<div class="form-group col-md-4 d-inline-block">
+					<div class="form-group col-md-3 d-inline-block">
 						<label class="bold-label">Brand</label>
 						<input type="text" placeholder="Enter Brand" name="product_brand" value="<?= set_value('product_brand', $product->product_brand); ?>" class="form-control" required>
 						<?= form_error('product_brand'); ?>
 					</div>
-					<div class="form-group col-md-3 d-inline-block">
-						<label class="bold-label">Preferred Supplier</label>
 
-						<select class="form-control " data-live-search="true" data-style="btn-outline-secondary" name="supplier_id" required>
-
-							<option class="text-info invisible" value="<?= $select->supplier_id ?>"><?= $select->supplier_name ?> - <?= $select->company_name ?></option>
-							<?php foreach ($supplier as $supp) { ?>
-								<option value="<?= $supp->supplier_id ?>"><?= $supp->supplier_name ?> - <?= $supp->company_name ?></option>
-							<?php } ?>
-						</select>
-					</div>
 
 					<div class="form-group col-md-3 d-inline-block">
 						<label class="bold-label">Product Category</label>
@@ -85,7 +79,7 @@
 					</div>
 
 
-					<div class="form-group col-md-4 d-inline-block">
+					<div class="form-group col-md-3 d-inline-block">
 						<label class="bold-label">Unit of Measure</label>
 
 						<select class="form-control form-control" name="product_uom" id="uom" title="Please enter unit" required>

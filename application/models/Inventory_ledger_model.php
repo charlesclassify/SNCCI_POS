@@ -20,4 +20,13 @@ class Inventory_ledger_model extends CI_Model
         $query = $this->db->get()->result();
         return $query;
     }
+
+    function get_product_ledger($product_name)
+    {
+        $this->db->select('*');
+        $this->db->from('inventory_ledger');
+        $this->db->where('product_name', $product_name);
+        $query = $this->db->get()->result();
+        return $query;
+    }
 }

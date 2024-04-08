@@ -173,7 +173,7 @@ class Product_model extends CI_Model
 		return $result;
 	}
 
-	function Select_one($id)
+	/*function Select_one($id)
 	{
 		$this->db->select('*');
 		$this->db->from('product AS pro');
@@ -181,7 +181,7 @@ class Product_model extends CI_Model
 		$this->db->where('pro.product_id', $id);
 		$query = $this->db->get()->row();
 		return $query;
-	}
+	}*/
 
 	function get_barcode($id)
 	{
