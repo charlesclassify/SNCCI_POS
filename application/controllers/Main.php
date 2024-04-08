@@ -910,6 +910,14 @@ class Main extends CI_Controller
 		$this->load->view('main/inventory_adjustment', $this->data);
 		$this->load->view('main/footer');
 	}
+	function printproduct()
+	{
+		$this->load->model('product_model');
+		$this->data['product'] = $this->product_model->get_all_product();
+		$this->load->view('main/header');
+		$this->load->view('main/print_inventory_report', $this->data);
+		$this->load->view('main/footer');
+	}
 	function add_stock($product_id)
 	{
 		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {

@@ -129,13 +129,7 @@
         }
         // If the user clicked "Cancel" or closed the dialog, stay on the payment page
     }
-    $(document).ready(function() {
-        <?php if ($this->session->flashdata('success')) { ?>
-            toastr.success('<?php echo $this->session->flashdata('success'); ?>');
-        <?php } elseif ($this->session->flashdata('error')) { ?>
-            toastr.error('<?php echo $this->session->flashdata('error'); ?>');
-        <?php } ?>
-    });
+
     // Submit event handler for the form
     $(document).ready(function() {
         $('form').submit(function() {
@@ -196,6 +190,5 @@
 
             return true; // Allow the form to be submitted
         });
-
     });
 </script>

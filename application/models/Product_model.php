@@ -169,7 +169,6 @@ class Product_model extends CI_Model
 		$this->db->where('isDelete', 'Active'); //MODIFY PAG MA SET NA ANG TAMA NGA TABLE
 		$query = $this->db->get('product');
 		$result = $query->result();
-
 		return $result;
 	}
 

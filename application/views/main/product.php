@@ -47,7 +47,7 @@
           ?>
               <tr class="text-center">
                 <td><?= $no++ ?></td>
-                <td><?php echo $product_name; ?></td>
+                <td><b><?php echo $product_name; ?></b></td>
                 <td><?php echo $product_code; ?></td>
                 <td>₱<?php echo $product_price; ?></td>
                 <td><?php echo $product_quantity; ?></td>
