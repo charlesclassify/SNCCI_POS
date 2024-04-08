@@ -335,6 +335,14 @@
                 updateLocalStorage();
 
                 var quantity = parseFloat($(this).val());
+
+                // Check if quantity is negative or zero
+                if (quantity <= 0 || isNaN(quantity)) {
+                    // Reset quantity to 1
+                    $(this).val(1);
+                    quantity = 1;
+                }
+
                 var productPrice = parseFloat($(this).closest('tr').data('product-price'));
                 var totalPrice = quantity * productPrice;
 
@@ -342,6 +350,7 @@
                 $(this).closest('tr').find('.product-total').text(totalPrice.toFixed(2));
                 updateTotal();
             });
+
 
             // Event handler for deleting items from the cart
             $('#table_field tbody').on('click', '.delete-item', function() {

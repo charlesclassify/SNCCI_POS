@@ -1,6 +1,8 @@
 <h4>Inventory Adjustment</h4>
 <div class="card card-outline card-success">
-    <div class="card-header  ">
+    <div class="card-header text-end">
+        <a href="<?php echo site_url('main/printproduct'); ?>" class="btn btn-success btn-sm "><i class="fas fa-print"></i>
+            Print Inventory Report</a>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -22,7 +24,7 @@
                     foreach ($product as $pro) : ?>
                         <tr class="text-center">
                             <td><?php echo $pro->product_code; ?></td>
-                            <td><?php echo $pro->product_name; ?></td>
+                            <td><b><?php echo $pro->product_name; ?></b></td>
                             <td><?php echo $pro->product_brand; ?></td>
                             <td><?php echo $pro->product_quantity; ?></td>
                             <td>₱<?php echo $pro->product_price; ?></td>
