@@ -122,6 +122,7 @@
                                     <th>Product Name</th>
                                     <th>UoM</th>
                                     <th>Price</th>
+                                    <th>Qty</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -131,6 +132,7 @@
                                         <td><?php echo $product->product_name; ?></td>
                                         <td><?php echo $product->product_uom; ?></td>
                                         <td>₱<?php echo $product->product_price; ?></td>
+                                        <td><?php echo $product->product_quantity; ?></td>
                                         <td><button class="btn btn-success add-to-cart">Add to Cart</button></td>
                                     </tr>
                                 <?php } ?>
@@ -224,6 +226,7 @@
                     productRow += '<td style="font-size: 12px; font-weight: bold">' + product.product_name + '</td>';
                     productRow += '<td>' + product.product_uom + '</td>';
                     productRow += '<td>' + '₱' + product.product_price + '</td>';
+                    productRow += '<td>' + product.product_quantity + '</td>';
                     productRow += '<td><button class="btn btn-success add-to-cart">Add to Cart</button></td>';
                     productRow += '</tr>';
                     $('#product-list-body').append(productRow);

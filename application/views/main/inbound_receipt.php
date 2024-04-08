@@ -177,6 +177,7 @@
         <h3></h3>
         <h2><strong>INBOUND RECEIPT</strong></h2>
         <h2>Prepared By: <?= ucfirst($this->session->userdata('UserLoginSession')['username']) ?></h2>
+
     </div>
     <div class="receipt_body">
         <?php foreach ($receipt_details as $receipt) : ?>
@@ -208,6 +209,10 @@
     <div class="comment">
         <div>Comments: <?= $receipt->comments ?></div>
         <div id="comment"></div>
+    </div>
+    <div class="comment">
+        <div>Supplier:<?= $receipt->supplier ?></div>
+        <div id="supplier"></div>
     </div>
     <div class="comment">
         <h3><?= $receipt->receiving_no ?> | <?= $receipt->date ?></h3>

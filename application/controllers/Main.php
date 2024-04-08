@@ -734,9 +734,7 @@ class Main extends CI_Controller
 		$this->edit_product_submit($product_id);
 		$this->load->model('product_model');
 		$this->data['product'] = $this->product_model->get_product($product_id);
-		$this->data['select'] = $this->product_model->select_one($product_id);
-		$this->load->model('supplier_model');
-		$this->data['supplier'] = $this->supplier_model->get_all_suppliers();
+		//$this->data['select'] = $this->product_model->select_one($product_id);
 		$this->load->model('unit_model');
 		$this->data['unit'] = $this->unit_model->get_all_unit();
 		$this->load->view('main/header');
@@ -753,7 +751,6 @@ class Main extends CI_Controller
 			$this->form_validation->set_rules('product_code', 'Product Code', 'trim|required');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|required');
 			$this->form_validation->set_rules('product_brand', 'Product Brand', 'trim|required');
-			$this->form_validation->set_rules('supplier_id', 'Supplier', 'trim|required');
 			$this->form_validation->set_rules('product_category', 'Product Category', 'trim|required');
 			$this->form_validation->set_rules('product_minimum_quantity', 'Product Miminum Quantity', 'trim|required');
 			$this->form_validation->set_rules('product_uom', 'Product UoM', 'trim|required');
@@ -891,8 +888,15 @@ class Main extends CI_Controller
 	{
 		$this->load->model('product_model');
 		$this->data['product'] = $this->product_model->get_product($product_id);
-		$this->data['select'] = $this->product_model->select_one($product_id);
-		$this->load->model('supplier_model');
+
+		// Get the product name from the product model
+		$product_name = $this->data['product']->product_name;
+
+		// Load the ledger model and fetch ledger entries for the product name
+		$this->load->model('inventory_ledger_model');
+		$this->data['ledger'] = $this->inventory_ledger_model->get_product_ledger($product_name);
+
+		// Load views
 		$this->load->view('main/header');
 		$this->load->view('main/view_product', $this->data);
 		$this->load->view('main/footer');
