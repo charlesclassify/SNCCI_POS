@@ -6,6 +6,10 @@
     .modal-title {
         color: white;
     }
+
+    .form-group {
+        margin: 10px;
+    }
 </style>
 
 
