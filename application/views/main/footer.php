@@ -65,3 +65,13 @@
     });
   });
 </script>
+<script>
+  $(document).ready(function() {
+    var url = window.location.href;
+    $('#layoutSidenav_nav .nav-link').each(function() {
+      if (this.href === url) {
+        $(this).addClass('active');
+      }
+    });
+  });
+</script>

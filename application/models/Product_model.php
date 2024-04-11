@@ -236,7 +236,6 @@ class Product_model extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-
 	public function insert_added_product_category()
 	{
 		$product_category = (string) $this->input->post('product_category');

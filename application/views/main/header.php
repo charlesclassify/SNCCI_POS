@@ -48,10 +48,13 @@
 
   /* Active sidebar item style */
   .nav-link.active {
-    background-color: #BF3131;
+    background-color: #5BB14D;
     /* Change the background color to red */
+  }
+
+  /* Active state text color */
+  #layoutSidenav_nav .nav-link.active {
     color: white;
-    /* Optionally change text color */
   }
 
   /* Adjusting nested sidebar items */
