@@ -76,61 +76,71 @@
                         <p>₱ <?= number_format($product->product_price, 2); ?></p>
                     </div>
                 </div>
-                <h3 class="mb-0">Product Movement</h3>
-                <br>
-                <br>
-
-                <div class="table-responsive">
-                    <table id="ledger-table" class="table table-bordered table-striped">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Date Posted</th>
-                                <th>Product Name</th>
-                                <th>UoM</th>
-                                <th>Quantity</th>
-                                <th>Unit</th>
-                                <th>Price</th>
-                                <th>Activity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($ledger as $row) : ?>
-                                <tr class="text-center">
-                                    <td><?= $row->date_posted ?></td>
-                                    <td><?= $row->product_name ?></td>
-                                    <td><?= $product->product_uom ?></td>
-                                    <td><?= $row->quantity ?></td>
-                                    <td><?= $row->unit ?></td>
-                                    <td>₱<?= $row->price ?></td>
-                                    <td>
-                                        <?php
-                                        $activityBadgeClass = '';
-                                        switch ($row->activity) {
-                                            case 'Inbound':
-                                                $activityBadgeClass = 'badge bg-success';
-                                                break;
-                                            case 'Outbound':
-                                                $activityBadgeClass = 'badge bg-danger';
-                                                break;
-                                        }
-                                        ?>
-                                        <span class="<?= $activityBadgeClass ?>"><?= ucfirst($row->activity) ?></span>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
         </div>
-        <div class="card-footer">
-            <div class="text-left">
-                <a class="btn btn-secondary" href="<?= base_url('main/product') ?>">
-                    <i class="fas fa-reply"></i> Back to Product
-                </a>
-            </div>
-        </div>
+
     </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">Product Movement</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="section">
 
+                    <div class="table-responsive">
+                        <table id="ledger-table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Date Posted</th>
+                                    <th>Product Name</th>
+                                    <th>UoM</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th>Price</th>
+                                    <th>Activity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($ledger as $row) : ?>
+                                    <tr class="text-center">
+                                        <td><?= $row->date_posted ?></td>
+                                        <td><?= $row->product_name ?></td>
+                                        <td><?= $product->product_uom ?></td>
+                                        <td><?= $row->quantity ?></td>
+                                        <td><?= $row->unit ?></td>
+                                        <td>₱<?= $row->price ?></td>
+                                        <td>
+                                            <?php
+                                            $activityBadgeClass = '';
+                                            switch ($row->activity) {
+                                                case 'Inbound':
+                                                    $activityBadgeClass = 'badge bg-success';
+                                                    break;
+                                                case 'Outbound':
+                                                    $activityBadgeClass = 'badge bg-danger';
+                                                    break;
+                                            }
+                                            ?>
+                                            <span class="<?= $activityBadgeClass ?>"><?= ucfirst($row->activity) ?></span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="text-left">
+                    <a class="btn btn-secondary" href="<?= base_url('main/product') ?>">
+                        <i class="fas fa-reply"></i> Back to Product
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

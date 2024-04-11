@@ -166,7 +166,7 @@ class Product_model extends CI_Model
 
 	function get_all_product()
 	{
-		$this->db->where('isDelete', 'Active'); //MODIFY PAG MA SET NA ANG TAMA NGA TABLE
+		$this->db->where('isDelete', 'no'); //MODIFY PAG MA SET NA ANG TAMA NGA TABLE
 		$query = $this->db->get('product');
 		$result = $query->result();
 
