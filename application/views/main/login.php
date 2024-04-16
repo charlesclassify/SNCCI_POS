@@ -19,7 +19,7 @@
   <!-- Style -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/stylers.css '); ?>" />
 
-  <title>Gensan Feedmill</title>
+  <title>SNCCI POS</title>
 </head>
 <style>
   .btn.btn-block {
