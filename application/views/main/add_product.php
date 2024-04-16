@@ -75,6 +75,7 @@
                                 <option value="<?= $pro->unit ?>"><?= $pro->unit ?></option>
                             <?php } ?>
                         </select>
+                        <?= form_error('product_uom'); ?>
 
                     </div>
 
@@ -88,6 +89,17 @@
                         <label class="bold-label">Price</label>
                         <input type="number" placeholder="Enter Price" min="1" name="product_price" value="<?= set_value('product_price'); ?>" class="form-control" id="product_price" required>
                         <?= form_error('product_price'); ?>
+                    </div>
+
+                    <div class="form-group col-md-3 d-inline-block">
+                        <label class="bold-label">Location</label>
+                        <select class="form-control form-control" name="product_location" id="product_location" title="Please enter unit" required>
+                            <option value="" selected hidden>Select Location</option>
+                            <?php foreach ($location as $pro) { ?>
+                                <option value="<?= $pro->location ?>"><?= $pro->location ?></option>
+                            <?php } ?>
+                        </select>
+                        <?= form_error('product_location'); ?>
                     </div>
 
                 </div>

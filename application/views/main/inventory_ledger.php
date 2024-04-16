@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-5">
             <label>&nbsp;</label>
-            <button type="submit" class="btn btn-success">Search</button>
+            <button type="submit" class="btn" style="background-color:#008081 ; color:white">Search</button>
         </div>
     </form>
 

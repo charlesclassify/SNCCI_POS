@@ -1,3 +1,9 @@
+<style>
+  h4 {
+    color: #008081;
+  }
+</style>
+
 <h4>Product Management</h4>
 
 <div class="col-sm-6">
@@ -5,8 +11,9 @@
 </div>
 <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
   <h1 class="m-0 text-dark">
-    <a href="<?php echo site_url('main/product'); ?>" class="btn btn-primary btn-sm btn-success"><i class="fas fa-boxes"></i> Products</a>
-    <a href="<?php echo site_url('main/unit'); ?>" class="btn btn-primary btn-sm btn-success"><i class="fas fa-barcode"></i> Unit Management</a>
+    <a href="<?php echo site_url('main/product'); ?>" class="btn btn-sm " style="background-color:#008081 ; color:white"><i class="fas fa-boxes"></i> Products</a>
+    <a href="<?php echo site_url('main/unit'); ?>" class="btn btn-sm " style="background-color:#008081 ; color:white"><i class="fas fa-barcode"></i> Unit Management</a>
+    <a href="<?php echo site_url('main/location'); ?>" class="btn btn-sm " style="background-color:#008081 ; color:white"><i class="fas fa-map-marker-alt"></i> Location</a>
   </h1>
 <?php endif; ?>
 <div class="card" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
@@ -14,7 +21,7 @@
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col-sm-6">
-          <a href="<?php echo site_url('main/add_product'); ?>" class="btn btn-success btn-sm"><i class="fas fa-box"></i> Add Product</a>
+          <a href="<?php echo site_url('main/add_product'); ?>" class="btn btn-sm" style="background-color:#008081 ; color:white"><i class="fas fa-box"></i> Add Product</a>
         </div>
       </div>
     </div>
@@ -59,7 +66,7 @@
                   <a href="<?php echo site_url('main/view_product/') . $product_id; ?>" style="color:darkcyan; padding-left:6px;"><i class=" fas fa-eye"></i></a>
                   <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
                     <a href="<?php echo site_url('main/edit_product/') . $product_id; ?>" style="color:gold; padding-left:6px;"><i class=" fas fa-edit"></i></a>
-                    <a href="<?php echo site_url('main/delete_product/') . $product_id; ?>" onclick="return confirm('Are you sure you want to delete this product?')" style="color:red; padding-left:6px;"><i class="fas fa-trash"></i></a>
+                    <a href="<?php echo site_url('main/delete_product/') . $product_id; ?>" onclick="return confirm('Are you sure you want to delete this product?')" style="color: #A3141D; padding-left:6px;"><i class="fas fa-trash"></i></a>
                   <?php endif; ?>
                 </td>
               </tr>

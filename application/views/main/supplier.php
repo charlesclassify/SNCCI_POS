@@ -1,8 +1,14 @@
+<style>
+    h4 {
+        color: #008081;
+    }
+</style>
+
 <h4>Supplier Management</h4>
 <div class="card card-outline card-success" style="max-width:100%; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
     <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
         <div class="card-header  ">
-            <a href="<?php echo site_url('main/add_supplier'); ?>" class="btn btn-success btn-sm "><i class="fas fa-truck"></i> Add Supplier </a>
+            <a href="<?php echo site_url('main/add_supplier'); ?>" class="btn btn-sm " style="background-color:#008081 ; color:white"><i class="fas fa-truck"></i> Add Supplier </a>
         </div>
     <?php endif; ?>
     <div class="card-body">

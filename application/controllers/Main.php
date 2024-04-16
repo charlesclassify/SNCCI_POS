@@ -684,6 +684,8 @@ class Main extends CI_Controller
 		$this->data['suppliers'] = $this->supplier_model->get_all_suppliers();
 		$this->load->model('unit_model');
 		$this->data['unit'] = $this->unit_model->get_all_unit();
+		$this->load->model('location_model');
+		$this->data['location'] = $this->location_model->get_all_location();
 		$this->load->view('main/header');
 		$this->load->view('main/add_product', $this->data);
 		$this->load->view('main/footer');
@@ -697,12 +699,11 @@ class Main extends CI_Controller
 			$this->form_validation->set_rules('product_code', 'Product Code', 'trim|required|is_unique[product.product_code]');
 			$this->form_validation->set_rules('product_name', 'Product Name', 'trim|required|is_unique[product.product_name]', array('is_unique' => 'The Product Name is already taken.'));
 			$this->form_validation->set_rules('product_brand', 'Product Brand', 'trim|required');
-			$this->form_validation->set_rules('supplier_id', 'Supplier', 'trim|required');
 			$this->form_validation->set_rules('product_category', 'Product Category', 'trim|required');
 			$this->form_validation->set_rules('product_minimum_quantity', 'Product Miminum Quantity', 'trim|required');
 			$this->form_validation->set_rules('product_uom', 'Product UoM', 'trim|required');
-			$this->form_validation->set_rules('product_uom_value', 'Product UoM Value', 'trim');
 			$this->form_validation->set_rules('product_barcode', 'Product Barcode', 'trim|required');
+			$this->form_validation->set_rules('product_location', 'Product Location', 'trim|required');
 			$this->form_validation->set_rules('product_price', 'Product Price', 'trim|required');
 
 			if ($this->form_validation->run() != FALSE) {
@@ -1574,9 +1575,7 @@ class Main extends CI_Controller
 		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
 			redirect('main/dashboard');
 		}
-		if ($_SESSION['role'] != USER_ROLE_ADMIN) {
-			redirect('main/dashboard');
-		}
+
 		$this->add_unit_submit();
 		$this->load->view('main/header');
 		$this->load->view('main/add_unit');
@@ -1681,51 +1680,71 @@ class Main extends CI_Controller
 		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
 			redirect('main/dashboard');
 		}
+
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('product_quantity', 'Product Quantity', 'trim|required');
 			$this->form_validation->set_rules('comments', 'Comments', 'trim|required');
 
 			if ($this->form_validation->run() != FALSE) {
-				$config['upload_path'] = './assets/images/'; // Set the upload directory
-				$config['allowed_types'] = 'jpg|jpeg|png|gif'; // Allowed file types
-				$config['max_size'] = 10000; // Maximum file size in kilobytes
-				$config['encrypt_name'] = TRUE; // Encrypt the file name for security
+				// Process the form data
 
-				$this->load->library('upload', $config);
+				// Check if a file is uploaded
+				if (!empty($_FILES['product_image']['name'])) {
+					$config['upload_path'] = './assets/images/'; // Set the upload directory
+					$config['allowed_types'] = 'jpg|jpeg|png|gif'; // Allowed file types
+					$config['max_size'] = 10000; // Maximum file size in kilobytes
+					$config['encrypt_name'] = TRUE; // Encrypt the file name for security
 
-				if ($this->upload->do_upload('product_image')) {
-					$image_data = $this->upload->data();
+					$this->load->library('upload', $config);
 
-					// Generate a unique filename based on the product name
-					$product_name = $this->input->post('product_name');
-					$product_code = $this->input->post('product_code');
-					$unique_filename = strtolower(str_replace(' ', '', $product_name)) . '' . $product_code . '_' . time() . $image_data['file_ext'];
+					if ($this->upload->do_upload('product_image')) {
+						$image_data = $this->upload->data();
 
-					// Rename the uploaded file to the unique filename
-					$new_path = './assets/images/' . $unique_filename;
-					rename($image_data['full_path'], $new_path);
+						// Generate a unique filename based on the product name
+						$product_name = $this->input->post('product_name');
+						$product_code = $this->input->post('product_code');
+						$unique_filename = strtolower(str_replace(' ', '', $product_name)) . '' . $product_code . '_' . time() . $image_data['file_ext'];
 
-					// Now, you can save $unique_filename into your database.
-					// Make sure you have a column in your database table to store the file name.
+						// Rename the uploaded file to the unique filename
+						$new_path = './assets/images/' . $unique_filename;
+						rename($image_data['full_path'], $new_path);
 
+						// Now, you can save $unique_filename into your database.
+						// Make sure you have a column in your database table to store the file name.
+
+						$this->load->model('product_model');
+						$response = $this->product_model->insert_received_quantity($unique_filename); // Pass the unique filename to the model
+
+						if ($response) {
+							$success_message = 'Quantity added successfully.';
+							$this->session->set_flashdata('success', $success_message);
+							// Redirect to inbound_receipt page with receiving_no parameter
+							redirect('main/inbound_receipt/' . $this->input->post('rn'));
+						} else {
+							$error_message = 'Quantity was not added.';
+							$this->session->set_flashdata('error', $error_message);
+						}
+					} else {
+						$error_message = 'Image upload failed: ' . $this->upload->display_errors();
+						$this->session->set_flashdata('error', $error_message);
+						redirect('main/inbound_receipt');
+					}
+				} else {
+					// If no file is uploaded, proceed without uploading an image
 					$this->load->model('product_model');
-					$response = $this->product_model->insert_received_quantity($unique_filename); // Pass the unique filename to the model
+					$response = $this->product_model->insert_received_quantity(null); // Pass null for filename
 
 					if ($response) {
 						$success_message = 'Quantity added successfully.';
 						$this->session->set_flashdata('success', $success_message);
-
 						// Redirect to inbound_receipt page with receiving_no parameter
 						redirect('main/inbound_receipt/' . $this->input->post('rn'));
 					} else {
 						$error_message = 'Quantity was not added.';
 						$this->session->set_flashdata('error', $error_message);
+						redirect('main/inbound_receipt');
 					}
-				} else {
-					$error_message = 'Image upload failed: ' . $this->upload->display_errors();
-					$this->session->set_flashdata('error', $error_message);
 				}
-				redirect('main/inbound_receipt');
 			} else {
 				// Validation failed, handle errors here
 				echo $this->form_validation->error_string(); // This will output the validation error messages
@@ -1749,5 +1768,91 @@ class Main extends CI_Controller
 		$this->load->view('main/header');
 		$this->load->view('main/inbound_receipt', $data);
 		$this->load->view('main/footer');
+	}
+	function location()
+	{
+		$this->load->model('location_model');
+		$this->data['location'] = $this->location_model->get_all_location();
+		$this->load->view('main/header');
+		$this->load->view('main/location', $this->data);
+		$this->load->view('main/footer');
+	}
+
+	function add_location()
+	{
+
+		$this->add_location_submit();
+		$this->load->view('main/header');
+		$this->load->view('main/add_location');
+		$this->load->view('main/footer');
+	}
+	function add_location_submit()
+	{
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->form_validation->set_rules('location', 'Location Name', 'trim|required|is_unique[location.location]');
+
+			if ($this->form_validation->run() != FALSE) {
+				$this->load->model('location_model');
+				$response = $this->location_model->insert_added_location();
+				if ($response) {
+					$success_message = 'New Location added successfully.';
+					$this->session->set_flashdata('success', $success_message);
+				} else {
+					$error_message = 'New Location was not added successfully.';
+					$this->session->set_flashdata('error', $error_message);
+				}
+				redirect('main/location');
+			}
+		}
+	}
+	function edit_location($location_id)
+	{
+		$this->edit_location_submit();
+		$this->load->model('location_model');
+		$this->data['location'] = $this->location_model->get_location($location_id);
+		$this->load->view('main/header');
+		$this->load->view('main/edit_location', $this->data);
+		$this->load->view('main/footer');
+	}
+
+	function edit_location_submit()
+	{
+
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$this->form_validation->set_rules('location', 'Location Name', 'trim|required');
+
+
+			if ($this->form_validation->run() != FALSE) {
+				$this->load->model('location_model');
+
+				$response = $this->location_model->update_added_location();
+
+				if ($response) {
+					$success_message = 'Location updated successfully.';
+					$this->session->set_flashdata('success', $success_message);
+				} else {
+					$error_message = 'Location was not updated successfully.';
+					$this->session->set_flashdata('error', $error_message);
+				}
+				redirect('main/location');
+			}
+		}
+	}
+	public function delete_location($id)
+	{
+
+		$this->load->model('location_model');
+		$response = $this->location_model->delete_location($id);
+
+		if ($response) {
+			$success_message = 'Location deleted successfully.';
+			$this->session->set_flashdata('success', $success_message);
+		} else {
+			$error_message = 'Location was not deleted successfully.';
+			$this->session->set_flashdata('error', $error_message);
+		}
+
+		redirect('main/location');
 	}
 }

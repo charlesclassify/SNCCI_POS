@@ -1,6 +1,6 @@
 <style>
     .modal-header {
-        background-color: green;
+        background-color: #008081;
     }
 
     .modal-title {
@@ -43,8 +43,8 @@
                     </div>
 
                     <div class="form-group col-md-11 d-inline-block">
-                        <label for="product_image" class="bold-label">Upload Image</label>
-                        <input type="file" id="product_image" name="product_image" value="<?= set_value('product_image'); ?>" class="form-control <?= form_error('product_image') ? 'is-invalid' : ''; ?>" required>
+                        <label for="product_image" class="bold-label">Upload Image (Optional)</label>
+                        <input type="file" id="product_image" name="product_image" value="<?= set_value('product_image'); ?>" class="form-control <?= form_error('product_image') ? 'is-invalid' : ''; ?>">
                         <span style="color: red;"><?= form_error('product_image'); ?></span>
                     </div>
 

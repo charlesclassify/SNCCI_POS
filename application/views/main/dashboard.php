@@ -8,7 +8,7 @@
     }
 
     .card-header {
-        background-color: #699E3C;
+        background-color: #008081;
         border: none;
         color: #ffffff;
         font-weight: bolder;
@@ -16,6 +16,11 @@
 
     .card-body {
         padding: 20px;
+    }
+
+    h5,
+    h4 {
+        color: #008081;
     }
 </style>
 

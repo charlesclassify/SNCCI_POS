@@ -6,6 +6,7 @@
 
 	h4 {
 		text-align: center;
+		color: #008081;
 	}
 
 	@media (max-width: 767px) {

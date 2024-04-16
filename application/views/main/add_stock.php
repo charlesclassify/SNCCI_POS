@@ -1,6 +1,12 @@
+<style>
+    h4 {
+        color: #008081;
+    }
+</style>
+
 <?php echo form_open_multipart('main/add_stock_submit', array('onsubmit' => 'return confirm(\'Are you sure you want to adjust this quantity?\')')); ?>
 <div class="container">
-    <h4 class="text-white mt-4">Stock Adjustment</h4>
+    <h4 class="mt-4">Stock Adjustment</h4>
     <div class="card mt-4">
         <div class="card-body text-center">
             <div class="row justify-content-center">

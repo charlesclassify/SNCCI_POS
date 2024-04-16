@@ -99,6 +99,10 @@
     .card {
         margin: 10px auto;
     }
+
+    h3 {
+        color: #008081;
+    }
 </style>
 
 <body>
@@ -112,7 +116,7 @@
                         <!-- Add the search input and button inside the card header -->
                         <div class="input-group mb-1">
                             <input type="text" class="form-control" id="product-search" placeholder="Search for a product">
-                            <button class="btn btn-success" id="search-button">Search</button>
+                            <button class="btn" style="background-color:#008081 ; color:white" id="search-button">Search</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -133,7 +137,7 @@
                                         <td><?php echo $product->product_uom; ?></td>
                                         <td>₱<?php echo $product->product_price; ?></td>
                                         <td><?php echo $product->product_quantity; ?></td>
-                                        <td><button class="btn btn-success add-to-cart">Add to Cart</button></td>
+                                        <td><button class="btn add-to-cart" style="background-color:#008081 ; color:white">Add to Cart</button></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -227,7 +231,7 @@
                     productRow += '<td>' + product.product_uom + '</td>';
                     productRow += '<td>' + '₱' + product.product_price + '</td>';
                     productRow += '<td>' + product.product_quantity + '</td>';
-                    productRow += '<td><button class="btn btn-success add-to-cart">Add to Cart</button></td>';
+                    productRow += '<td><button class="btn add-to-cart" style="background-color:#008081 ; color:white">Add to Cart</button></td>';
                     productRow += '</tr>';
                     $('#product-list-body').append(productRow);
                 });

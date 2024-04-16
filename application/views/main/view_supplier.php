@@ -2,6 +2,11 @@
     label {
         font-weight: bold;
     }
+
+    h3,
+    h4 {
+        color: #008081;
+    }
 </style>
 <div class="container mt-3">
     <div class="row mb-2">

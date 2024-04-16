@@ -1,7 +1,7 @@
 <h4>Inventory Adjustment</h4>
 <div class="card card-outline card-success">
     <div class="card-header text-end">
-        <a href="<?php echo site_url('main/printproduct'); ?>" class="btn btn-success btn-sm "><i class="fas fa-print"></i>
+        <a href="<?php echo site_url('main/printproduct'); ?>" class="btn btn-sm " style="background-color:#008081 ; color:white"> <i class="fas fa-print"></i>
             Print Inventory Report</a>
     </div>
     <div class="card-body">
@@ -41,7 +41,7 @@
 
                             </td>
                             <td>
-                                <a href="<?php echo site_url('main/add_stock/' . $pro->product_id); ?>"><button type="button" class="btn btn-sm btn-success" id="btn_po">Adjust</button></a>
+                                <a href="<?php echo site_url('main/add_stock/' . $pro->product_id); ?>"><button type="button" class="btn btn-sm" style="background-color:#008081 ; color:white" id="btn_po">Adjust</button></a>
                             </td>
                         </tr>
                     <?php endforeach ?>

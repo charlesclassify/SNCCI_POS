@@ -31,6 +31,7 @@ class Product_model extends CI_Model
 		$product_minimum_quantity = (string) $this->input->post('product_minimum_quantity');
 		$product_uom =  $this->input->post('product_uom');
 		$product_barcode =  $this->input->post('product_barcode');
+		$product_location =  $this->input->post('product_location');
 		$product_price =  $this->input->post('product_price');
 
 		$data = array(
@@ -42,6 +43,7 @@ class Product_model extends CI_Model
 			'product_uom' => $product_uom,
 			'supplier_id' => $supplier_id,
 			'product_barcode' => $product_barcode,
+			'product_location' => $product_location,
 			'product_minimum_quantity' => $product_minimum_quantity,
 			'product_price' => $product_price,
 
@@ -351,10 +353,9 @@ class Product_model extends CI_Model
 				'supplier' => $supplier,
 				'product_uom' => $product_uom,
 				'comments' => $comments,
-				'product_image' => $image_file_name,
+				'product_image' => $image_file_name ?: null, // Set image file name to null if it's empty
 
 			);
-			$this->db->where('product_id', $product_id);
 			$this->db->insert('receiving', $data);
 
 			$data_inventory_ledger = [
@@ -373,6 +374,7 @@ class Product_model extends CI_Model
 			return FALSE;
 		}
 	}
+
 	function get_receiving($id)
 	{
 		$this->db->select('*');

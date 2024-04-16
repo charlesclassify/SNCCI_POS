@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>GFI Management System</title>
+  <title>SNCCI Point of Sale</title>
 
 
-  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/logogfi.png" />
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/sncci_logo_nobg.png" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -48,7 +48,7 @@
 
   /* Active sidebar item style */
   .nav-link.active {
-    background-color: #5BB14D;
+    background-color: #008081;
     /* Change the background color to red */
   }
 
@@ -87,7 +87,7 @@
   <nav class="sb-topnav navbar navbar-expand navbar-light bg-light ">
     <!-- Navbar Brand-->
     <a href="<?= base_url('main') ?>" class="brand-link d-flex align-items-center exclude-from-highlight">
-      <img src="<?= base_url('assets/images/gf.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 10.0; max-width: 90%; max-height: 65px" />
+      <img src="<?= base_url('assets/images/sncci_logo_nobg.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 10.0; max-width: 90%; max-height: 65px" />
     </a>
 
 

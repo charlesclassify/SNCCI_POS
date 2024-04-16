@@ -6,6 +6,7 @@
 
     h4 {
         margin-left: 10px;
+        color: #008081;
     }
 </style>
 
