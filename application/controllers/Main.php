@@ -1259,7 +1259,7 @@ class Main extends CI_Controller
 
 	function payment()
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 		$this->add_payment_submit();
@@ -1271,7 +1271,7 @@ class Main extends CI_Controller
 	}
 	function add_payment_submit()
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 		if ($this->input->post('btn_add_sales')) {
@@ -1297,7 +1297,7 @@ class Main extends CI_Controller
 
 	function receipt()
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 		$this->load->view('main/header');
@@ -1306,7 +1306,7 @@ class Main extends CI_Controller
 	}
 	function pos()
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 		$this->load->model('product_model');
@@ -1663,7 +1663,7 @@ class Main extends CI_Controller
 
 	function receive_quantity($product_id)
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 		$this->receive_quantity_submit();
@@ -1677,7 +1677,7 @@ class Main extends CI_Controller
 
 	function receive_quantity_submit()
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 
@@ -1754,7 +1754,7 @@ class Main extends CI_Controller
 
 	function inbound_receipt($receiving_no)
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER) {
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
 		$this->load->model('goods_received_model');

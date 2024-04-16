@@ -60,7 +60,7 @@
                 <td><?php echo $product_quantity; ?></td>
                 <td><?php echo $product_uom; ?></td>
                 <td>
-                  <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN || $_SESSION['UserLoginSession']['role'] == USER_ROLE_INBOUND_USER) : ?>
+                  <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN || $_SESSION['UserLoginSession']['role'] == USER_ROLE_INBOUND_USER || $_SESSION['UserLoginSession']['role'] == USER_ROLE_STAFF) : ?>
                     <a href="#" class="addReceivedQuantitiesBtn" data-productid="<?php echo $product_id; ?>" style="color:green; padding-left:6px;" title="Click here to add product quantity" data-bs-toggle="modal"><i class="fas fa-plus-circle"></i></a>
                   <?php endif; ?>
                   <a href="<?php echo site_url('main/view_product/') . $product_id; ?>" style="color:darkcyan; padding-left:6px;"><i class=" fas fa-eye"></i></a>

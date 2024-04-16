@@ -77,6 +77,14 @@
       display: none;
     }
   }
+
+  #logo {
+    margin-left: 70px;
+  }
+
+  #sidebarToggle {
+    margin-left: 100px;
+  }
 </style>
 
 <script>
@@ -87,7 +95,7 @@
   <nav class="sb-topnav navbar navbar-expand navbar-light bg-light ">
     <!-- Navbar Brand-->
     <a href="<?= base_url('main') ?>" class="brand-link d-flex align-items-center exclude-from-highlight">
-      <img src="<?= base_url('assets/images/sncci_logo_nobg.png'); ?>" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 10.0; max-width: 90%; max-height: 65px" />
+      <img src="<?= base_url('assets/images/sncci_logo_nobg.png'); ?>" alt="SNCCI Logo" class="brand-image img-circle elevation-3" id="logo" style="opacity: 10.0; max-width: 90%; max-height: 65px" />
     </a>
 
 
@@ -160,7 +168,7 @@
                 <a class="nav-link text-white" href="<?= base_url('main/inventory_ledger') ?>">Inventory Ledger</a>
               </nav>
             </div>
-            <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_OUTBOUND_USER || $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN) : ?>
+            <?php if (isset($_SESSION['UserLoginSession']['role']) && $_SESSION['UserLoginSession']['role'] == USER_ROLE_OUTBOUND_USER || $_SESSION['UserLoginSession']['role'] == USER_ROLE_ADMIN || $_SESSION['UserLoginSession']['role'] == USER_ROLE_STAFF) : ?>
               <a id="nav-link" class="nav-link" href="<?= base_url('main/pos') ?>">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-cash-register text-dark"></i>

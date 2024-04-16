@@ -88,3 +88,4 @@ defined('EXIT__AUTO_MAX')      or define('EXIT__AUTO_MAX', 125); // highest auto
 define('USER_ROLE_ADMIN', 'Admin');
 define('USER_ROLE_INBOUND_USER', 'Inbound User');
 define('USER_ROLE_OUTBOUND_USER', 'Outbound User');
+define('USER_ROLE_STAFF', 'Staff');

@@ -67,6 +67,7 @@
 
 
 						<option value="Admin">Admin</option>
+						<option value="Staff">Staff</option>
 						<option value="Inbound User">Inbound User</option>
 						<option value="Outbound User">Outbound User</option>
 
