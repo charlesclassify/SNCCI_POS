@@ -160,7 +160,7 @@
 
 <div class="container">
     <div class="receipt_header">
-        <h1>SNCCI</h1>
+        <h1>SNCFI</h1>
         <h2>WAREHOUSE</h2>
         <h3> Outbound Receipt</h3>
         <h2>Prepared By: <?= ucfirst($this->session->userdata('UserLoginSession')['username']) ?></h2>

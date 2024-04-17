@@ -172,7 +172,7 @@
 
 <div class="container">
     <div class="receipt_header">
-        <h1>SNCCI</h1>
+        <h1>SNCFI</h1>
         <h2>WAREHOUSE</h2>
         <h3></h3>
         <h2><strong>INBOUND RECEIPT</strong></h2>

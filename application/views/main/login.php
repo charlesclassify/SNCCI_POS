@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet" />
 
-  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/sncci_logo_nobg.png" />
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/SNCFI.logo-removebg-preview.png" />
 
   <link rel="stylesheet" href="fonts/icomoon/style.css" />
 
@@ -19,7 +19,7 @@
   <!-- Style -->
   <link rel="stylesheet" href="<?php echo base_url('assets/css/stylers.css '); ?>" />
 
-  <title>SNCCI POS</title>
+  <title>SNCFI POS</title>
 </head>
 <style>
   .btn.btn-block {
@@ -54,7 +54,7 @@
           <div class="col-md-7">
             <div class="mb-4">
               <h3 class="text-center">
-                <img src="<?php echo base_url('assets/images/sncci_logo_nobg.png'); ?>" alt="SNCCI LOGO" class="logo">
+                <img src="<?php echo base_url('assets/images/SNCFI.logo-removebg-preview.png'); ?>" alt="SNCCI LOGO" class="logo">
               </h3>
             </div>
             <div class="form-group first">

@@ -9,7 +9,7 @@
   <title>SNCCI Point of Sale</title>
 
 
-  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/sncci_logo_nobg.png" />
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>/assets/images/SNCFI.logo-removebg-preview.png" />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -95,7 +95,7 @@
   <nav class="sb-topnav navbar navbar-expand navbar-light bg-light ">
     <!-- Navbar Brand-->
     <a href="<?= base_url('main') ?>" class="brand-link d-flex align-items-center exclude-from-highlight">
-      <img src="<?= base_url('assets/images/sncci_logo_nobg.png'); ?>" alt="SNCCI Logo" class="brand-image img-circle elevation-3" id="logo" style="opacity: 10.0; max-width: 90%; max-height: 65px" />
+      <img src="<?= base_url('assets/images/SNCFI.logo-removebg-preview.png'); ?>" alt="SNCCI Logo" class="brand-image img-circle elevation-3" id="logo" style="opacity: 10.0; max-width: 90%; max-height: 65px" />
     </a>
 
 
