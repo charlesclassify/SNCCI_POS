@@ -25,13 +25,8 @@ class Main extends CI_Controller
 
 	public function index()
 	{
-		// If user is already logged in, redirect to dashboard
-		if ($this->session->userdata('UserLoginSession')) {
-			redirect(base_url('main/dashboard'));
-		} else {
-			// Load the login page
-			$this->load->view('main/login');
-		}
+		// Load the login page
+		$this->load->view('login');
 	}
 
 	function login_submit()
@@ -57,11 +52,11 @@ class Main extends CI_Controller
 					redirect(base_url('main/dashboard'));
 				} else {
 					$this->session->set_flashdata('error', 'Username or Password is Wrong');
-					redirect(base_url('main/'));
+					redirect(base_url(''));
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Fill all the required fields');
-				redirect(base_url('main/'));
+				redirect(base_url(''));
 			}
 		}
 	}
@@ -70,7 +65,7 @@ class Main extends CI_Controller
 	{
 		// Destroy session and redirect to login page
 		$this->session->sess_destroy();
-		redirect(base_url('main'));
+		redirect(base_url('/'));
 	}
 
 	function dashboard()
