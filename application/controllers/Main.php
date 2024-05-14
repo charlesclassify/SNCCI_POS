@@ -80,8 +80,6 @@ class Main extends CI_Controller
 		$this->data['low_stocks'] = $this->product_model->getLowStockProductsCount();
 		$this->data['lowStockProducts'] = $this->product_model->getLowStockProducts();
 		$this->data['out_off_stock'] = $this->product_model->countOutOfStockProducts();
-		$this->data['pending_po'] = $this->purchase_order_model->getPendingPurchaseOrdersCount();
-		$this->data['completed_po'] = $this->purchase_order_model->getReceivedPurchaseOrderCount();
 		$this->load->view('main/header');
 		$this->load->view('main/dashboard', $this->data);
 		$this->load->view('main/footer');
@@ -143,8 +141,7 @@ class Main extends CI_Controller
 		$this->load->model('user_model');
 		$this->data['user'] = $this->user_model->get_users($user_id);
 
-		$this->load->model('branch_model');
-		$this->data['branch'] = $this->branch_model->get_all_branch();
+
 		$this->load->view('main/header');
 		$this->load->view('main/edituser', $this->data);
 		$this->load->view('main/footer');
@@ -244,7 +241,7 @@ class Main extends CI_Controller
 			redirect('main/dashboard');
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->form_validation->set_rules('supplier_name', 'Supplier', 'trim|is_unique[suppliers.supplier_name]');
+			$this->form_validation->set_rules('vendor_code', 'Vendor Code', 'trim|is_unique[suppliers.vendor_code]|required');
 			$this->form_validation->set_rules('company_name', 'Company', 'trim|is_unique[suppliers.company_name]');
 			$this->form_validation->set_rules('supplier_contact', 'Contact', 'trim|is_unique[suppliers.supplier_contact]');
 			$this->form_validation->set_rules('supplier_street', 'Street', 'trim');
@@ -297,7 +294,7 @@ class Main extends CI_Controller
 			redirect('main/dashboard');
 		}
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$this->form_validation->set_rules('supplier_name', 'Supplier Name', 'trim');
+			$this->form_validation->set_rules('vendor_code', 'Vendor Code', 'trim');
 			$this->form_validation->set_rules('company_name', 'Company Name', 'trim');
 			$this->form_validation->set_rules('supplier_contact', 'Supplier Contact', 'trim');
 			$this->form_validation->set_rules('supplier_street', 'Supplier Street', 'trim');
@@ -733,6 +730,8 @@ class Main extends CI_Controller
 		//$this->data['select'] = $this->product_model->select_one($product_id);
 		$this->load->model('unit_model');
 		$this->data['unit'] = $this->unit_model->get_all_unit();
+		$this->load->model('location_model');
+		$this->data['location'] = $this->location_model->get_all_location();
 		$this->load->view('main/header');
 		$this->load->view('main/editproduct', $this->data);
 		$this->load->view('main/footer');
@@ -753,6 +752,7 @@ class Main extends CI_Controller
 			$this->form_validation->set_rules('product_uom_value', 'Product UoM Value', 'trim');
 			$this->form_validation->set_rules('product_barcode', 'Product Barcode', 'trim|required');
 			$this->form_validation->set_rules('product_price', 'Product Price', 'trim|required');
+			$this->form_validation->set_rules('product_location', 'Product Location', 'trim|required');
 
 			if ($this->form_validation->run() != FALSE) {
 				// Form validation successful, proceed with insertion
@@ -1150,15 +1150,10 @@ class Main extends CI_Controller
 
 	function reports()
 	{
-		$this->load->model('purchase_order_model');
-		$this->data['po'] = $this->purchase_order_model->get_all_po();
 		$this->load->model('goods_received_model');
-		$this->data['gr'] = $this->goods_received_model->get_all_gr();
-		$this->data['receiving'] = $this->goods_received_model->get_all_receiving();
+		$this->data['receiving'] = $this->goods_received_model->get_all_receiving_no();
 		$this->load->model('inventory_adjustment_model');
 		$this->data['ia'] = $this->inventory_adjustment_model->get_all_adjust();
-		$this->load->model('goods_return_model');
-		$this->data['gr1'] = $this->goods_return_model->get_all_grt1();
 		$this->load->model('sales_model');
 		$this->data['sa'] = $this->sales_model->get_all_sales();
 		$this->load->view('main/header');
@@ -1190,9 +1185,9 @@ class Main extends CI_Controller
 
 		$backup = &$this->dbutil->backup($db_format);
 
-		$dbname = 'pos.sql';
+		$dbname = 'sncfi_pos.sql';
 
-		$save = 'C:/xampp/htdocs/GFI_POS/assets/db_backup/' . $db_format['filename'];
+		$save = 'C:/xampp/htdocs/SNCFI_POS/assets/db_backup/' . $db_format['filename'];
 
 		if (write_file($save, $backup)) {
 			$success_message = 'Database backup created successfully.';
@@ -1285,7 +1280,7 @@ class Main extends CI_Controller
 			}
 
 			// Redirect to the receipt page instead of 'main/pos'
-			redirect('main/receipt');
+			redirect('main/receipt?ref_no=' . $this->input->post('reference_no'));
 		}
 	}
 
@@ -1295,8 +1290,15 @@ class Main extends CI_Controller
 		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_OUTBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
 			redirect('main/dashboard');
 		}
+
+		// Retrieve the reference number from the URL parameter
+		$reference_no = $this->input->get('ref_no');
+
+		// Pass the reference number to the receipt view
+		$this->data['reference_no'] = $reference_no;
+
 		$this->load->view('main/header');
-		$this->load->view('main/receipt');
+		$this->load->view('main/receipt', $this->data);
 		$this->load->view('main/footer');
 	}
 	function pos()
@@ -1672,13 +1674,9 @@ class Main extends CI_Controller
 
 	function receive_quantity_submit()
 	{
-		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
-			redirect('main/dashboard');
-		}
-
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$this->form_validation->set_rules('product_quantity', 'Product Quantity', 'trim|required');
-			$this->form_validation->set_rules('comments', 'Comments', 'trim|required');
+			$this->form_validation->set_rules('comments', 'Comments', 'trim');
 
 			if ($this->form_validation->run() != FALSE) {
 				// Process the form data
@@ -1714,7 +1712,7 @@ class Main extends CI_Controller
 							$success_message = 'Quantity added successfully.';
 							$this->session->set_flashdata('success', $success_message);
 							// Redirect to inbound_receipt page with receiving_no parameter
-							redirect('main/inbound_receipt/' . $this->input->post('rn'));
+							redirect('main/inbound_receipt/' . $response);
 						} else {
 							$error_message = 'Quantity was not added.';
 							$this->session->set_flashdata('error', $error_message);
@@ -1733,7 +1731,7 @@ class Main extends CI_Controller
 						$success_message = 'Quantity added successfully.';
 						$this->session->set_flashdata('success', $success_message);
 						// Redirect to inbound_receipt page with receiving_no parameter
-						redirect('main/inbound_receipt/' . $this->input->post('rn'));
+						redirect('main/inbound_receipt/' . $response);
 					} else {
 						$error_message = 'Quantity was not added.';
 						$this->session->set_flashdata('error', $error_message);
@@ -1766,6 +1764,9 @@ class Main extends CI_Controller
 	}
 	function location()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('location_model');
 		$this->data['location'] = $this->location_model->get_all_location();
 		$this->load->view('main/header');
@@ -1775,6 +1776,9 @@ class Main extends CI_Controller
 
 	function add_location()
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 
 		$this->add_location_submit();
 		$this->load->view('main/header');
@@ -1803,6 +1807,9 @@ class Main extends CI_Controller
 	}
 	function edit_location($location_id)
 	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->edit_location_submit();
 		$this->load->model('location_model');
 		$this->data['location'] = $this->location_model->get_location($location_id);
@@ -1836,7 +1843,9 @@ class Main extends CI_Controller
 	}
 	public function delete_location($id)
 	{
-
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN) {
+			redirect('main/dashboard');
+		}
 		$this->load->model('location_model');
 		$response = $this->location_model->delete_location($id);
 
@@ -1849,5 +1858,41 @@ class Main extends CI_Controller
 		}
 
 		redirect('main/location');
+	}
+
+	function batch_receiving()
+	{
+		if ($_SESSION['UserLoginSession']['role'] != USER_ROLE_ADMIN && $_SESSION['UserLoginSession']['role'] != USER_ROLE_INBOUND_USER && $_SESSION['UserLoginSession']['role'] != USER_ROLE_STAFF) {
+			redirect('main/dashboard');
+		}
+		$this->batch_receiving_submit();
+		$this->load->model('product_model');
+		//$this->data['br'] = $this->product_model->insert_batch_receiving();
+		$this->data['rn'] = $this->product_model->receiving_no();
+		$this->data['product'] = $this->product_model->get_all_product();
+		$this->load->model('supplier_model');
+		$this->data['suppliers'] = $this->supplier_model->get_all_suppliers();
+		$this->load->view('main/header');
+		$this->load->view('main/batch_receiving', $this->data);
+		$this->load->view('main/footer');
+	}
+
+	function batch_receiving_submit()
+	{
+		if ($this->input->post('btn_batch_receiving')) {
+			$this->load->model('product_model');
+			// Call the insert_batch_receiving function to get the receiving_no
+			$receiving_no = $this->product_model->insert_batch_receiving();
+			if ($receiving_no) {
+				$success_message = 'Received Quantity created successfully.';
+				$this->session->set_flashdata('success', $success_message);
+				// Redirect to the inbound_receipt page with the receiving_no as a parameter
+				redirect('main/inbound_receipt/' . $receiving_no);
+			} else {
+				$error_message = 'Received Quantity was not created successfully.';
+				$this->session->set_flashdata('error', $error_message);
+				redirect('main/dashboard');
+			}
+		}
 	}
 }
